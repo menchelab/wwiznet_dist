@@ -167,7 +167,7 @@ should ship a config.json** - at least a layout and a preset.
 | `ar` | `{ "showBoxLines": bool }` | AR placement box wireframe on the Quest (default `true`) |
 | `xrTooltipMaxDistanceMeters`, `xrToggleMaxDistanceMeters` | number (metres) | reach of the VR / AR laser for tooltips and for selecting nodes (about 1) |
 | `metadataCache` | `{ "enabled": true }` | tooltip data from a prebuilt `cache/` folder (built with a developer tool); leave it out unless that folder exists |
-| `agentBackendUrl` | URL | the AI agent backend, only when one is deployed next to the app |
+| `agentBackendUrl` | URL | the AI agent backend's base URL ending in `/api` (e.g. `http://127.0.0.1:8787/api`); leave it out when the deployment proxies `/agent-api/` to the backend. Setup: [agent-backend.md](agent-backend.md) |
 | `localStorage` | object | raw browser-storage snapshot written by Export (window positions, table settings). Do not write it by hand; remove it from exported files unless you want exactly those positions |
 
 Top-level `cameraPosition` / `cameraRotation` in exported files are not read; the camera belongs to

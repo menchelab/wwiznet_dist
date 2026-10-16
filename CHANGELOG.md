@@ -1,845 +1,1438 @@
-## 0.7.0 (2026-10-16)
-## 0.6.0 (2026-10-05)
-## 0.5.2 (2026-10-04)
-
-### Bug Fixes
-
-* fade other edges also for a subset without edges of its own (then all edges fade)
-## 0.5.1 (2026-10-02)
-
-### Features
-
-* fog distance default 1000, slider range 5-4000
-* **xr:** laser pick range configurable as xrHoverMaxDistanceMeters in config.json, default 1 m
-* **xr:** resize window panels with the laser from the bottom-right corner; charts announce redraws instead of 30-frame panel polling
-* **xr:** separate laser ranges for tooltips (1 m) and trigger toggle (2 m) in config.json
-* **xr:** thumbstick scrolls the window under the laser; poll ResizeObservers during XR so charts relayout after a resize
-
-### Bug Fixes
-
-* **xr:** re-raster the panel after a thumbstick scroll (no scroll events while presenting)
-## 0.5.0 (2026-10-02)
-
-### Features
-
-* hover tooltip
-* tooltip fixes, lilgui in window launcher
-* vr culling
-* **xr:** WebGPU + WebXR prototype for Quest 3
-
-### Bug Fixes
-
-* dropdown feature for htmlmesh
-
-### Performance Improvements
-
-* frame profiler, benchmark harness, and first render optimisations
-* InstancedMesh for nodes and edges, direct render when bloom is off, benchmark report
-* isolate each enrichment window's worker so they stop cancelling each other
-* load TensorFlow.js and pacmap_tfjs on demand
-* run enrichment stats (hypergeometric p-value + FDR) in a Web Worker
-* run the subset declutter force layout (s key) in a Web Worker
-* static instance buffers, XR panel supersampling, GPU-time runs, reports
-
-### Reverts
-
-* Revert "xr: keep the tooltip panel clear of its node"
-## 0.4.0 (2026-09-26)
-
-### Features
-
-* add "Add common neighbors" and "Prune leaf nodes" calc menu items
-* add "Connect subset" calc menu item (Steiner-tree shortest-path connect)
-* add "Expand ..." calc menu item to expand subset by edge attribute
-* add "i" isolate-mode shortcut, Escape exits it first
-* add Edge Table window, generalizing the subset table into EntityTable
-* camera-following key light for consistent node facet contrast
-* exit subset-layout mode on node layout switch
-* prefer name attribute as tooltip title, id smaller in brackets
-* remove r/m report-modal shortcuts, reorder help dialog
-* search + icon bar improvements, subset-layout recalc on change
-* show notification with nodes/edges added after edge-attribute expand
-* show source/target node tooltips beside the edge tooltip
-
-### Bug Fixes
-
-* close hover dead-zone between icon-bar buttons and their dropdowns
-* **dataset:** trim edges.tsv header and warn on column-count mismatch
-* gate edge source/target tooltips behind Shift, fix overlap on clamp
-* keep top-left icon bar dropdowns from pushing sibling buttons
-* resolve all eslint errors and warnings across src
-## 0.3.0 (2026-09-25)
-
-### Features
-
-* add enrichment window for categorical/array column analysis
-* add L/Shift+L shortcut to cycle node layout, fix focus & duplicate default layout
-* add subset-only 3D force layout mode (s key), fix default-layout dropdown gap
-* **aggregatednetwork:** min degree/edge width slider
-* **aggregatednetwork:** two more options to calculate edge count
-* cluster
-* enlarge normalized graph scale to 300, exclude layout columns from attribute dropdowns
-* export full nodes.tsv
-* **layoutcalc:** feature
-* **rwr:** better implementation
-* upload
-
-### Bug Fixes
-
-* no binning dist chart for categorical, added freeze button
-* remove click-to-open-changelog from version label
-* rescale explosion/relayout constants for the 300-unit normalized graph
-## 0.2.4 (2026-03-13)
-
-### Features
-
-* aggregated network
-* create layout
-* spectral embeddings for large graphs
-
-### Bug Fixes
-
-* color palette reverse option, subset key instead keyvalue as default for kv columns
-* **presets:** only load and assign to proper dataset
-## 0.2.3 (2026-03-09)
-
-### Features
-
-* create layout
-* spectral embeddings for large graphs
-## 0.2.2 (2026-03-07)
-
-### Features
-
-* 3d popup
-* 3d viewer, sidebar list labels molecule elements
-* 3rd ctrl tooltip
-* add all kinds of force layout parameters to meta multi network
-* add UpSet window with categorical/array/KV attribute, dark theme, G/S and freeze
-* add whole cluster
-* allow ?dataset=asdf or /dataset uri
-* alt qwe with different movement scales
-* animation
-* barchart improvements
-* **barchart:** sort stacked bar charts by subvalue/name
-* better table with tooltip
-* binning on off toglgle in distribution chart
-* bloom highlighted, fade others
-* calcs, expand subset
-* clickable nodes in table
-* colors for table categoriesd _a _kv etc
-* ctrl 3rd tooltip
-* delete browserstorage
-* dist table for subset cols
-* doom rwr
-* duplicate windows, subset query library
-* **edgehilight:** smarter and more control on how to highlight in settings window
-* **edgesubset:** highlighting edge subsets, configurable in settings window
-* ensure windows are inside browser windw when creating from config.json
-* esc to clear subset
-* excel copy paste
-* explosion
-* explosion + halfexplosion + reset fix with alt xyr
-* explosion forced subset
-* extract keys from _c_kv and create extra categorival items in cat dropdowns like color etc
-* focus mode
-* fog
-* global color per column refined
-* has/substr feature for querly language
-* heatmap
-* heatmap cut to top 50 elements if more
-* heatmap diagonalbar grey
-* heatmap num items limit
-* helper util to delete unwanted layouts
-* highligh nodes toggle, usegeneid if exists for molecular viewer
-* highligh on hover in 3dmol viewer
-* highlights from column for 3d viewer
-* inlineview for table
-* keyvalue categorical creates stacked bars in global distribution chart
-* kv
-* kv split toggle for distributions
-* lasso, interact modes, uibar
-* layouts
-* lcc options, by k core, cc
-* library query, drag drop nodes to 3d explorere
-* llm stuff markdown, table dist changes for binning
-* load/save settings
-* loading bar
-* lol hardcoded terms
-* median,  max degree for lcc
-* multi meta network
-* multiexplosion
-* multiple meshes and mesh select by attributer
-* network dist details
-* network meta window
-* new edge material
-* new global distribution chart that aggregates a and uses same logic as subset distribution
-* new network window
-* nodeset dragdrop support for heatmap (src) and subsetlist (target)
-* offset on duplicate
-* preset json
-* pulse active node
-* query engine
-* **query:** autorun option for config
-* rectangular selection for scatter chart and drag drop source ability
-* relayout
-* relayout increment factor
-* rwr progress bar improvements, give ui thread time to redraw
-* **rwr:** add top dataset
-* **rwr:** multi run by categorical
-* **rwr:** progress bar refinement
-* scatter size aggegrate, node attribute integrated into pubsub bus
-* scatter window
-* secondary tooltip
-* side panel
-* side panel details
-* side panel details
-* simplify to common material that supports opacity + glow
-* small stuff i think
-* **socialnotebook:** categorical parsing for edge attributes
-* store/layout in config
-* styling
-* subset highlighting
-* subset list, drop targets more fields
-* subset network changes, upload script multiple datasets, revert color palette
-* subset panel
-* subset panel
-* subset query allow unicode chars
-* **subsetbuilder:** ctrl + enter to run query
-* **subsetquery:** added library of subsets
-* table 500 limit, subset list header row count
-* **table:** allow as drag drop target, freeze when received drop
-* **table:** sticky header, sticky content on high rows
-* tags_a column that sync with subset library and can be acces everywhere, emit pubsub event on dataset metadata change
-* temporary tsv values
-* tooltip for geneid column if exists (override potential wroing id in lasbel/mainid)
-* tooltip switching
-* **ui:** collapse window to bottom edge if snapped there already
-* **ui:** hide legacy windows and update titles
-* **ui:** windows snap to each other and edges
-* upload script
-* **upset:** dragdrop
-* **upset:** parsing for kv improved
-* user modes, interact select
-* webgpu bloom
-* webgpu working, indicator emoji, forcewebgl uri support
-* window icons
-
-### Bug Fixes
-
-* 3rd tooltip refinement
-* annotation node opacity
-* arrow keys removed
-* autoload preset constrained to current dataset
-* **cicd:** errors in dev env
-* **cicd:** vite config for coep headers etc
-* clear subset, close windows when switching dataset
-* create windows after node data is built
-* **datasetloader:** strip newline of last tsv header
-* default values lilgui
-* depth stuff
-* depth write for highlighted nodes
-* **distributionswdw:** drag drop for non stacked
-* **distributionwindow:** hover tooltip out of window when at top edgeg, rwr warn if overwriting old results
-* **docs:** refine wording
-* dont show coordinate columns in subset table
-* edge color gets recalculated and gets darker and darker
-* explosion + highlighted
-* fog settings
-* freehand select reduce z-index to go behind lilgui
-* get rid of data in preset
-* heatmap close bug, observer; log default of for checkbox
-* highlight edges
-* lasso ui bar fixes
-* limit presets to dataset when populating preset dropdown
-* lint errs
-* **multimetanetwork:** fixed some, introduced new bugs probably, removed 4x save img temporarily
-* no grey in catagorical colors
-* no subset changes in search enter
-* node selection bugfix (index over multiple meshes)
-* normalization order, reduced multiple normalizations
-* proper clone windows
-* race condition normalization mesh rebuild, hacky ensureNormalizationsBeforeRebuild() added
-* reapply highlighting when mesh rebuilt by changing attribute dropdowns
-* refine preset loading, presets per layout, get rid of presets.json and use config.json
-* relative paths for prod builds
-* rwr speedup
-* selection hilight management
-* settings button in ui also open settings wdw when closed with x
-* side panel dfixes
-* small stuff
-* stuff
-* **subsetlibrary:** on delete also delete from subset temp column and emit column data changed event; handle column data changed in upset window
-* **subsetlistwindow:** handle resizig window and splitter better
-* switched vite to mpa, so 404 dont load default app and trigger multiple function calls
-* temporarily removing show labels
-* texture memory leak
-* tooltip ctrl cleanup
-* tooltip refinements
-* **ui-bar:** move easteregg away
-* **upset:** pre check len and clip attributes
-* **windows:** click brings to top
-* zlayering
-
-### Performance Improvements
-
-* configurable depth sort, selective bloom, and sort removal
-* reduced to 3 meshes
-## 0.2.1 (2026-03-06)
-
-### Features
-
-* 3d popup 901111c
-* 3d viewer, sidebar list labels molecule elements 0db1233
-* 3rd ctrl tooltip b7be899
-* add all kinds of force layout parameters to meta multi network 48d5f25
-* add UpSet window with categorical/array/KV attribute, dark theme, G/S and freeze 8b8070b
-* add whole cluster fb5d296
-* allow ?dataset=asdf or /dataset uri e5511a9
-* alt qwe with different movement scales cc8b76b
-* animation bebe559
-* barchart improvements c6d2704
-* **barchart:** sort stacked bar charts by subvalue/name 893e78e
-* better table with tooltip fb1d2be
-* binning on off toglgle in distribution chart 5de03f7
-* bloom highlighted, fade others 518483e
-* calcs, expand subset 0cc0d46
-* clickable nodes in table 7898777
-* colors for table categoriesd _a _kv etc 512aaf3
-* ctrl 3rd tooltip 32726ef
-* delete browserstorage 6e4192a
-* dist table for subset cols 7fc6829
-* doom rwr a460b78
-* duplicate windows, subset query library 237b9c8
-* edge node color attr d5aa3be
-* ensure windows are inside browser windw when creating from config.json ea3244d
-* esc to clear subset cb3b226
-* excel copy paste 3f65cbd
-* explosion c7d268f
-* explosion + halfexplosion + reset fix with alt xyr bd398dc
-* explosion forced subset 33c12bd
-* extract keys from _c_kv and create extra categorival items in cat dropdowns like color etc 8099e19
-* focus mode e069807
-* fog 1d4cabb
-* global color per column refined cce664f
-* has/substr feature for querly language daf3ed5
-* heatmap fe817a6
-* heatmap cut to top 50 elements if more ec83642
-* heatmap diagonalbar grey 5ed9a9b
-* heatmap num items limit 3714b3a
-* helper util to delete unwanted layouts fed2940
-* highligh nodes toggle, usegeneid if exists for molecular viewer cec1f9f
-* highligh on hover in 3dmol viewer 6765df7
-* highlights from column for 3d viewer f06ecce
-* inlineview for table 76c7e80
-* keyvalue categorical creates stacked bars in global distribution chart d437973
-* kv e052bdb
-* kv split toggle for distributions c74f5d7
-* lasso, interact modes, uibar 20eb9ca
-* layouts a1cfec8
-* lcc options, by k core, cc e82c85b
-* library query, drag drop nodes to 3d explorere bacfddc
-* llm stuff markdown, table dist changes for binning 5a46655
-* load/save settings 5b22281
-* loading bar cd7b38d
-* lol hardcoded terms eef1b8d
-* median,  max degree for lcc 84cfce0
-* multi meta network 450082f
-* multiexplosion f2da575
-* multiple meshes and mesh select by attributer 9c0ba2f
-* network dist details ef6117e
-* network meta window 1634537
-* new global distribution chart that aggregates a and uses same logic as subset distribution 67caddd
-* new network window 4802963
-* nodeset dragdrop support for heatmap (src) and subsetlist (target) 9f55c3f
-* offset on duplicate 6d1b236
-* preset json b44982d
-* pulse active node cb4de04
-* query engine d592d70
-* **query:** autorun option for config 9051834
-* rectangular selection for scatter chart and drag drop source ability 7373c88
-* relayout 1c32a51
-* relayout increment factor 256f802
-* rwr progress bar improvements, give ui thread time to redraw ad062f8
-* **rwr:** add top dataset 8ffc815
-* **rwr:** multi run by categorical fba0cea
-* **rwr:** progress bar refinement ba42418
-* scatter size aggegrate, node attribute integrated into pubsub bus efd79b8
-* scatter window 1d8c92a
-* secondary tooltip e73a3e1
-* select edge attr for width 54a9d5d
-* side panel aceae6d
-* side panel details 9b0dd08
-* side panel details 7ef32a5
-* simplify to common material that supports opacity + glow f2f7065
-* small stuff i think aed53ae
-* **socialnotebook:** categorical parsing for edge attributes 07ab196
-* store/layout in config 2619505
-* styling 7246320
-* subset highlighting 193b8e5
-* subset list, drop targets more fields 87e3c33
-* subset network changes, upload script multiple datasets, revert color palette c9df868
-* subset panel d4ce2f8
-* subset panel fb7765b
-* subset query allow unicode chars 576bf4e
-* **subsetbuilder:** ctrl + enter to run query d30168d
-* **subsetquery:** added library of subsets 94652b3
-* table 500 limit, subset list header row count 6f7a652
-* **table:** allow as drag drop target, freeze when received drop 14b9a74
-* **table:** sticky header, sticky content on high rows c27368b
-* tags_a column that sync with subset library and can be acces everywhere, emit pubsub event on dataset metadata change 3c548cc
-* temporary tsv values ba678f3
-* tooltip for geneid column if exists (override potential wroing id in lasbel/mainid) 5302863
-* tooltip switching a3c15a7
-* **ui:** collapse window to bottom edge if snapped there already cad4270
-* **ui:** hide legacy windows and update titles 5b4e8ae
-* **ui:** windows snap to each other and edges 263cfd1
-* upload script 503d8f0
-* **upset:** dragdrop d5db99a
-* **upset:** parsing for kv improved 2c676fd
-* user modes, interact select b1fa64f
-* webgpu bloom b4599d5
-* webgpu working, indicator emoji, forcewebgl uri support 1780b91
-* window icons 62fab92
-
-### Bug Fixes
-
-* 3rd tooltip refinement 88b21fc
-* annotation node opacity cd92142
-* arrow keys removed 5683e34
-* autoload preset constrained to current dataset ed77750
-* **cicd:** errors in dev env c6d57b1
-* **cicd:** vite config for coep headers etc 644b589
-* clear subset, close windows when switching dataset c7bb49d
-* create windows after node data is built 098f3a7
-* **datasetloader:** strip newline of last tsv header 0837b47
-* default values lilgui 5a7f7b7
-* depth stuff b636064
-* depth write for highlighted nodes 91902bb
-* **distributionswdw:** drag drop for non stacked 79d1c03
-* **distributionwindow:** hover tooltip out of window when at top edgeg, rwr warn if overwriting old results b1c9fb3
-* **docs:** refine wording d4fc560
-* dont show coordinate columns in subset table 711a7cc
-* edge color gets recalculated and gets darker and darker e3fd0b2
-* explosion + highlighted 169253a
-* fog settings 0994900
-* freehand select reduce z-index to go behind lilgui 2430020
-* get rid of data in preset 961df3e
-* heatmap close bug, observer; log default of for checkbox 5af450a
-* highlight edges d7ac59c
-* iwas da3afdb
-* lasso ui bar fixes 6b1cd84
-* limit presets to dataset when populating preset dropdown f78f3b3
-* lint errs 7a6e6d9
-* **multimetanetwork:** fixed some, introduced new bugs probably, removed 4x save img temporarily 3f5f0f4
-* no grey in catagorical colors 405ba1f
-* no subset changes in search enter 4ae2532
-* node selection bugfix (index over multiple meshes) 4be49d7
-* normalization order, reduced multiple normalizations 5b5adc5
-* proper clone windows b963645
-* race condition normalization mesh rebuild, hacky ensureNormalizationsBeforeRebuild() added 9f4d49c
-* reapply highlighting when mesh rebuilt by changing attribute dropdowns e75202a
-* refine preset loading, presets per layout, get rid of presets.json and use config.json 6e193b7
-* relative paths for prod builds 48879d7
-* rwr speedup 1904def
-* selection hilight management 5144c52
-* settings button in ui also open settings wdw when closed with x f21dfac
-* side panel dfixes e39daba
-* small stuff fc1315d
-* stuff 90fef90
-* **subsetlibrary:** on delete also delete from subset temp column and emit column data changed event; handle column data changed in upset window f0af55d
-* **subsetlistwindow:** handle resizig window and splitter better 4b94c16
-* switched vite to mpa, so 404 dont load default app and trigger multiple function calls 874bf15
-* temporarily removing show labels 68f8b76
-* texture memory leak 46eb5de
-* tooltip ctrl cleanup 4e0d948
-* tooltip refinements 777340b
-* tooltips ca2ad2a
-* **ui-bar:** move easteregg away 848c4bd
-* **upset:** pre check len and clip attributes a9eeb4a
-* **windows:** click brings to top 36998c2
-* zlayering caa1040
-
-### Performance Improvements
-
-* configurable depth sort, selective bloom, and sort removal c8a38ca
-* reduced to 3 meshes 3956a78
 # Changelog
 
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [0.2.0] - 2026-03-06
-
-### Added
-
-* Initial changelog; version and release setup (release-it, conventional-changelog).
-
-## Git history (by date)
-
-## 2026-03-06
-
-- `14b9a74` feat(table): allow as drag drop target, freeze when received drop
-- `fba0cea` feat(rwr): multi run by categorical
-- `2c676fd` feat(upset): parsing for kv improved
-- `8ffc815` feat(rwr): add top dataset
-- `60e863f` chore(data): bulk add array elements to column
-- `e4c8bcf` chore(rwr): add kv column
-- `a576727` ui(subsetlist): better logic for handling frozen state
-- `b1c9fb3` fix(distributionwindow): hover tooltip out of window when at top edgeg, rwr warn if overwriting old results
-- `f0af55d` fix(subsetlibrary): on delete also delete from subset temp column and emit column data changed event; handle column data changed in upset window
-- `28d0495` chore(rwr): emit dataset metadata change when adding temporary columns
-- `3d5258e` ui(query/list) splitter resizing bit more sane, min width, icons, pubsub for library changes
-- `22c260a` chore(temporarycolumns): changed column name from tags_a to subsets_a
-- `4b94c16` fix(subsetlistwindow): handle resizig window and splitter better
-- `3c548cc` feat: tags_a column that sync with subset library and can be acces everywhere, emit pubsub event on dataset metadata change
-- `5d013be` ui(subsetlist): splitter, css refine
-- `94652b3` feat(subsetquery): added library of subsets
-- `5b4e8ae` feat(ui): hide legacy windows and update titles
-- `79d1c03` fix(distributionswdw): drag drop for non stacked
-- `6f7a652` feat: table 500 limit, subset list header row count
-- `36998c2` fix(windows): click brings to top
-- `d5db99a` feat(upset): dragdrop
-- `a9eeb4a` fix(upset): pre check len and clip attributes
-- `21de8fe` chore(upset): improve ui etc
-
-## 2026-03-05
-
-- `8b8070b` feat: add UpSet window with categorical/array/KV attribute, dark theme, G/S and freeze
-- `e82c85b` feat: lcc options, by k core, cc
-- `848c4bd` fix(ui-bar): move easteregg away
-- `644b589` fix(cicd): vite config for coep headers etc
-- `ad062f8` feat: rwr progress bar improvements, give ui thread time to redraw
-
-## 2026-03-04
-
-- `ba42418` feat(rwr): progress bar refinement
-- `1904def` fix: rwr speedup
-- `a460b78` feat: doom rwr
-- `84cfce0` feat: median,  max degree for lcc
-- `5af450a` fix: heatmap close bug, observer; log default of for checkbox
-- `e81e4cf` chore: streamline subset global toggle to header bar, get rid of old windows
-- `6d1b236` feat: offset on duplicate
-
-## 2026-03-03
-
-- `893e78e` feat(barchart): sort stacked bar charts by subvalue/name
-- `d437973` feat: keyvalue categorical creates stacked bars in global distribution chart
-- `5302863` feat: tooltip for geneid column if exists (override potential wroing id in lasbel/mainid)
-- `0837b47` fix(datasetloader): strip newline of last tsv header
-- `d30168d` feat(subsetbuilder): ctrl + enter to run query
-- `a80e877` chore: strings refined
-- `9051834` feat(query): autorun option for config
-- `b4a0041` fox(heatmap): show original binning bounds, not log value, when log on
-- `711a7cc` fix: dont show coordinate columns in subset table
-- `cd92142` fix: annotation node opacity
-- `3f5f0f4` fix(multimetanetwork): fixed some, introduced new bugs probably, removed 4x save img temporarily
-- `efd79b8` feat: scatter size aggegrate, node attribute integrated into pubsub bus
-- `7373c88` feat: rectangular selection for scatter chart and drag drop source ability
-- `d4fc560` fix(docs): refine wording
-- `cd7b38d` feat: loading bar
-- `87e3c33` feat: subset list, drop targets more fields
-- `9f55c3f` feat: nodeset dragdrop support for heatmap (src) and subsetlist (target)
-- `48d5f25` feat: add all kinds of force layout parameters to meta multi network
-
-## 2026-03-02
-
-- `450082f` feat: multi meta network
-- `1d8c92a` feat: scatter window
-- `2955993` settings: add other dataset
-- `1634537` feat: network meta window
-- `c6d57b1` fix(cicd): errors in dev env
-- `a9911a5` cicd: debug output what normalization actually does (what columns) and timing
-- `5b5adc5` fix: normalization order, reduced multiple normalizations
-- `9f4d49c` fix: race condition normalization mesh rebuild, hacky ensureNormalizationsBeforeRebuild() added
-- `fed2940` feat: helper util to delete unwanted layouts
-- `ea3244d` feat: ensure windows are inside browser windw when creating from config.json
-- `ec83642` feat: heatmap cut to top 50 elements if more
-- `364cb30` docs: possible metrics
-- `6e19630` docs: ideas for 3rd party library adoption
-- `2430020` fix: freehand select reduce z-index to go behind lilgui
-
-## 2026-03-01
-
-- `098f3a7` fix: create windows after node data is built
-- `b963645` fix: proper clone windows
-- `e5511a9` feat: allow ?dataset=asdf or /dataset uri
-- `3714b3a` feat: heatmap num items limit
-- `2619505` feat: store/layout in config
-- `5ed9a9b` feat: heatmap diagonalbar grey
-- `fe817a6` feat: heatmap
-- `c74f5d7` feat: kv split toggle for distributions
-- `67caddd` feat: new global distribution chart that aggregates a and uses same logic as subset distribution
-- `874bf15` fix: switched vite to mpa, so 404 dont load default app and trigger multiple function calls
-
-## 2026-02-28
-
-- `c9df868` feat: subset network changes, upload script multiple datasets, revert color palette
-
-## 2026-02-27
-
-- `68f8b76` fix: temporarily removing show labels
-- `0cc0d46` feat: calcs, expand subset
-- `4802963` feat: new network window
-- `78d52b3` chore: refactor preset/config stuff into own module
-- `29f3609` chore: centralize stuff in window manager
-- `01ba895` chore: refactor legacy popup windows into windows system
-- `c7bb49d` fix: clear subset, close windows when switching dataset
-- `f78f3b3` fix: limit presets to dataset when populating preset dropdown
-- `6e193b7` fix: refine preset loading, presets per layout, get rid of presets.json and use config.json
-
-## 2026-02-26
-
-- `5570415` chore: console cleanup, remove auto init preset
-
-## 2026-02-25
-
-- `5a46655` feat: llm stuff markdown, table dist changes for binning
-
-## 2026-02-24
-
-- `cad4270` feat(ui): collapse window to bottom edge if snapped there already
-
-## 2026-02-23
-
-- `4e8b84a` add windows state export and restore, z index fixes for tooltip and search, controls unfolded, chart white numbers instead black
-- `576bf4e` feat: subset query allow unicode chars
-- `bacfddc` feat: library query, drag drop nodes to 3d explorere
-- `237b9c8` feat: duplicate windows, subset query library
-- `961df3e` fix: get rid of data in preset
-- `263cfd1` feat(ui): windows snap to each other and edges
-- `ccfd3aa` ui: uibar smaller
-- `4dc06ab` ui: uibar smaller
-- `4ae2532` fix: no subset changes in search enter
-- `44c28f1` Floating window improvements: header dropdown, editable title (subset table), icons
-- `62fab92` feat: window icons
-- `fc1315d` fix: small stuff
-
-## 2026-02-22
-
-- `5a7f7b7` fix: default values lilgui
-- `f21dfac` fix: settings button in ui also open settings wdw when closed with x
-- `b4599d5` feat: webgpu bloom
-- `1780b91` feat: webgpu working, indicator emoji, forcewebgl uri support
-- `3dc0e07` WebGPU: fix texture update, node material TSL/flows, stats overlay
-- `81126d4` Adopt latest Three.js BatchedMesh: core culling/raycast, minimal onBeforeRender
-- `14b272a` cidi: upload relative paths support
-- `dc51214` chore: update modules
-- `48879d7` fix: relative paths for prod builds
-- `3fbd552` chore: delete unused and cleanup
-- `a17cf61` lib2app refactor: restructure repo as standalone graph app
-- `cb4de04` feat: pulse active node
-- `890c961` chore: rm deadcode, no rebuild meshes for highlights
-- `3956a78` perf: reduced to 3 meshes
-- `b636064` fix: depth stuff
-- `c8a38ca` perf: configurable depth sort, selective bloom, and sort removal
-
-## 2026-02-21
-
-- `46eb5de` fix: texture memory leak
-- `caa1040` fix: zlayering
-- `6b1cd84` fix: lasso ui bar fixes
-- `20eb9ca` feat: lasso, interact modes, uibar
-- `b1fa64f` feat: user modes, interact select
-- `ff3e5c3` refactor: renderer out
-- `37b5fae` more refactor
-- `da5645c` rm tmp files
-- `ec7d829` remove dead code
-- `6418b44` refact00r0r0r0
-- `6a84aab` refactor
-- `a4d1b0c` refactor: whatever
-- `3849f95` refactor: more stuff
-- `30de54d` refactor: attribute resolvers, kv parsing, meshes, chart, presets
-- `7120d2b` refactor: windows in own files
-- `9e34b84` refactor: removed sidebar
-- `186679a` refactor: highlight settings from sidebar to own section in settings window
-- `275d09e` refactor(windows): a lot
-- `5d02751` refactor: windows
-- `484268f` Windows refactor: FloatingWindow, AppEvents, icon bar, pop-out windows (table/builder/dists/KV), SidePanelHandlers, color/mesh normalization
-
-## 2026-02-20
-
-- `8d8caa4` docs: pubsub refactor plan
-- `cce664f` feat: global color per column refined
-- `c6d2704` feat: barchart improvements
-- `c27368b` feat(table): sticky header, sticky content on high rows
-- `512aaf3` feat: colors for table categoriesd _a _kv etc
-- `76c7e80` feat: inlineview for table
-- `fb1d2be` feat: better table with tooltip
-- `7a6e6d9` fix: lint errs
-- `d7ac59c` fix: highlight edges
-- `405ba1f` fix: no grey in catagorical colors
-- `91902bb` fix: depth write for highlighted nodes
-- `e3fd0b2` fix: edge color gets recalculated and gets darker and darker
-- `e75202a` fix: reapply highlighting when mesh rebuilt by changing attribute dropdowns
-- `f2f7065` feat: simplify to common material that supports opacity + glow
-- `518483e` feat: bloom highlighted, fade others
-- `cec1f9f` feat: highligh nodes toggle, usegeneid if exists for molecular viewer
-
-## 2026-02-19
-
-- `8099e19` feat: extract keys from _c_kv and create extra categorival items in cat dropdowns like color etc
-- `daf3ed5` feat: has/substr feature for querly language
-- `583cdc2` mix: tsv tools
-
-## 2026-02-18
-
-- `cf1b95a` plan: refactor windows
-
-## 2026-02-17
-
-- `901111c` feat: 3d popup
-- `a2ff5ee` Merge branch 'logbook' into main
-- `a509d7c` Support both raw numbers and letter+number in 3dhl column
-
-## 2026-02-16
-
-- `2f999ca` no idea
-
-## 2026-02-13
-
-- `5de03f7` feat: binning on off toglgle in distribution chart
-- `7898777` feat: clickable nodes in table
-- `2cd125a` fixes: 3d popup
-- `0db1233` feat: 3d viewer, sidebar list labels molecule elements
-- `2196dbd` fix:highlights
-- `df4b8bc` fix:highlights
-- `f06ecce` feat: highlights from column for 3d viewer
-- `6765df7` feat: highligh on hover in 3dmol viewer
-- `ccdfec6` 3D structure popup (p key), Alt tooltip removed, lower-right popup, auto-update on hover, node label, transparent bg
-
-## 2026-01-26
-
-- `91a653f` misc: reduce deswcription tooltip cutoff
-- `4e0d948` fix: tooltip ctrl cleanup
-
-## 2026-01-24
-
-- `777340b` fix: tooltip refinements
-- `88b21fc` fix: 3rd tooltip refinement
-- `b7be899` feat: 3rd ctrl tooltip
-- `32726ef` feat: ctrl 3rd tooltip
-- `0994900` fix: fog settings
-- `1d4cabb` feat: fog
-- `e069807` feat: focus mode
-- `5683e34` fix: arrow keys removed
-- `1679d6c` refactor: keyboard shortcuts
-- `e551981` docs: hints in menu
-- `256f802` feat: relayout increment factor
-- `1c32a51` feat: relayout
-- `503d8f0` feat: upload script
-- `6e4192a` feat: delete browserstorage
-- `a3c15a7` feat: tooltip switching
-- `e73a3e1` feat: secondary tooltip
-
-## 2026-01-16
-
-- `71fef29` aattribute scaling
-- `1223104` verify, no idea
-
-## 2025-12-02
-
-- `2082dcb` no idea
-
-## 2025-11-24
-
-- `169253a` fix: explosion + highlighted
-- `cb3b226` feat: esc to clear subset
-- `33c12bd` feat: explosion forced subset
-- `cc8b76b` feat: alt qwe with different movement scales
-- `f2da575` feat: multiexplosion
-- `bd398dc` feat: explosion + halfexplosion + reset fix with alt xyr
-
-## 2025-11-23
-
-- `c7d268f` feat: explosion
-- `0cee8d8` clean up data git
-- `aa62aef` report show
-- `3758f50` search stuff
-- `d0eea8b` search tool
-- `e982987` removed animation between preset loads
-- `0530034` tooltip stuff
-- `49aaf50` tooltip uiux
-- `701310a` (refactor): tooltip
-- `ea345a4` (fix): iwas
-
-## 2025-11-22
-
-- `63cd1f9` (fix): verwaisteinit highlighted edge fix
-- `f707c26` (fix): edge lookup for hover
-- `167aadf` lil ui reorder
-- `e338cf5` blavla
-- `ed77750` fix: autoload preset constrained to current dataset
-- `2c56299` bugfixes: reset values of newly seleted attribute if they are null instead of keeping previous
-
-## 2025-11-21
-
-- `fdfaf18` bugfixes kv _a metric dist
-- `e052bdb` feat: kv
-- `ba678f3` feat: temporary tsv values
-- `2694edb` hoverbox updates uiux
-- `e7c552a` meshes
-
-## 2025-11-20
-
-- `bebe559` feat: animation
-- `a1cfec8` feat(): layouts
-- `07ab196` feat(socialnotebook): categorical parsing for edge attributes
-
-## 2025-11-18
-
-- `90fef90` fix: stuff
-- `ef6117e` feat: network dist details
-- `eef1b8d` feat: lol hardcoded terms
-
-## 2025-11-13
-
-- `5287adf` varun data
-
-## 2025-10-30
-
-- `90e02bb` Merge branch 'webpub' into main
-- `b44982d` feat: preset json
-
-## 2025-10-29
-
-- `3f65cbd` feat: excel copy paste
-- `5144c52` fix: selection hilight management
-- `7246320` feat: styling
-- `7fc6829` feat: dist table for subset cols
-- `aed53ae` feat: small stuff i think
-- `d592d70` feat: query engine
-- `fb5d296` feat: add whole cluster
-- `e39daba` fix: side panel dfixes
-
-## 2025-10-28
-
-- `9b0dd08` feat: side panel details
-- `7ef32a5` feat: side panel details
-- `aceae6d` feat: side panel
-- `d4ce2f8` feat: subset panel
-- `fb7765b` feat: subset panel
-- `193b8e5` feat: subset highlighting
-- `4be49d7` fix: node selection bugfix (index over multiple meshes)
-- `9c0ba2f` feat: multiple meshes and mesh select by attributer
-- `5b22281` feat: load/save settings
-- `9fe6a47` fix attribute detection with _norm postfix
-
-## 2025-10-27
-
-- `de56692` edge transparency
-- `9f4cd1f` q
-- `d5aa3be` feat: edge node color attr
-- `54a9d5d` feat: select edge attr for width
-
-## 2025-10-26
-
-- `7ca76ab` experiment: per object culling very simple geo
-- `2457586` removed animation, simplified geo further, box to line, etc
-- `da3afdb` fix: iwas
-- `ca2ad2a` fix: tooltips
-- `f89a276` sdfg
-- `a4da657` asf
-
+Every commit of every release, newest first (generated by scripts/changelog.mjs).
+
+## 0.8.0 (2026-10-16)
+
+6 commits.
+
+### Changes
+
+- agent-backend guide: HTTPS rule precise (localhost via adb is fine)
+- Agent backend guide for deployments (docs/for_agents/agent-backend.md: run it, agentBackendUrl or /agent-api proxy, HTTPS rule, no-auth rule, verification, steps for setup agents), linked from the builds-repo README, the data guide and the docs; the Agent window's unreachable banner points to the public backend and the guide
+- Docs: the agent backend is public at menchelab/asdf10k-agentic-backend
+- Changelog with every commit: scripts/changelog.mjs rebuilds CHANGELOG.md from the release tags (all commits per release, grouped by conventional type when present, bodies included), used by release-it before:release instead of conventional-changelog; CHANGELOG regenerated (469 entries)
+- publish-dist: push the builds repo over HTTPS with the GitHub CLI token by default (no SSH passphrase), hint gh auth setup-git
+- publish-dist: never prompt (BatchMode SSH, no terminal prompt), check builds-repo access first and stop with the ssh-add hint instead of hanging under release-it
+
+## 0.7.0 (2026-10-16)
+
+45 commits.
+
+### Changes
+
+- Builds-repo README: drop the Questions section
+- Visual tuning for external agents: window.asdf10k automation API (runCommand, listCommands, subscribe, whenReady, getState), commands settings.list and config.export (current view as preset, ready config.json without clipboard); guide docs/for_agents/visual-tuning.md (requirements, API, tuning loop, judging rubric, export, verify, pitfalls), linked from the builds-repo README and the data guide; docs
+- publish-dist: strip links into the private source repo from the published CHANGELOG
+- Distribution: publish the build to the public repo menchelab/wwiznet_dist (scripts/publish-dist.sh, npm run publish:dist, release-it after:release hook): app files, agent docs, CHANGELOG, VERSION.json, a README for people and agents (scripts/builds-repo/), update.sh for deployments (data untouched), server.py; never dist/data; docs/core/Distribution.md
+- Data setup guide: complete config.json reference (every key the importer reads, all preset fields with built-in defaults and ranges, windows, tooltips), how the file is applied and its traps, how to choose good defaults from a data profile, full example
+- Build copies docs/for_agents/ to dist/docs/for_agents/ (copy-agent-docs plugin); custom-windows-guide moved into for_agents next to the data setup guide, links updated
+- docs/for_agents/data-folder-setup.md: self-contained guide for agents with only dist/ - datasets.json, nodes.tsv / edges.tsv formats and column suffixes, config.json keys with an example, checklist
+- Datasets from data/datasets.json (keys, folders incl. subfolders, labels, aliases, hidden, default) instead of a hardcoded map: registry loaded at boot before the GUI, alias migration of local storage, error overlay when missing; dataset.switch command (effect data) as the one switch path with the dataset:changed event, URL ?dataset= kept in sync, dropdown and ring call it, settings.set refuses data.*; config.json and agent sessions alias-aware; docs (core/Datasets.md, plan reviewed v2)
+- docs/ideas: orthographic camera toggle (what exists, estimate, steps)
+- Custom windows: static markdown windows from data/<dataset>/custom_windows/ (index.json + front matter: title, icon, size, open, order), loaded on dataset load, listed in + menu Custom ▸ and ring Windows › Custom, rendered with the agent / report markdown code (cmd: buttons, change cards, subset chips, images, mermaid), auto-open, export config, window description for the agent; docs and a self-contained author guide (docs/custom-windows-guide.md)
+- XR: the laser picks the nearest panel along the ray, not the first in creation order (clicks went to the panel behind when two overlapped); hidden panels skipped
+- Outline: reports bundled with a dataset (folder + index.json with hashes, parser, store origin / baseUrl, loader on dataset load, poller with ETag and toasts, window adjustments, export script from sessions, writer contract, later push via the activity stream)
+- Ring actions are commands of their own (subset.expandOneHop, subset.connect, subset.commonNeighbors, subset.pruneLeaves, subset.isolate, subset.subsetLayout, subset.clear as selection; nav.flyToSubset, nav.resetView, layout.next, layout.prev as view); menu.run and subset.action removed; the catalog's actions list is empty; docs
+- links with a ring menu id as the command run through subset.action / menu.run / settings.set (the agent wrote cmd:subset.expandOneHop); __perf.handles.runCmdUrl for scripted checks of agent links; docs
+- menu-tree: windows.agent (BigBrainz20k) and windows.reports in the presentation-mode example; the ppicml config lists them
+- Handover: model and effort defaults are done
+- window.open tolerates the agent's spellings: type as type / window / id, a generic column key for the single required column option; window.configure with id=<window type> targets the newest window of that type
+- Fixes before phase 5: subset.set without ids clears the subset (an agent chip for an empty set is a clear button), Enrichment bars carry their selected nodes (click sets the subset, drag works, like Distributions), the scatter rectangle badge sets the subset on click, Enrichment and Scatter windows opaque black; handover doc docs/agent-handover.md for continuing on another machine
+- BigBrainz20k and Report windows: opaque black frame and all text 18 px Inter semibold (bundled public/fonts/Inter-SemiBold.woff2, @font-face scoped to .agent-window / .report-window, code stays monospace); single-node chips highlight the node like a Subset Table label click (Shift = fly to it) and report it as feedback; docs
+- BigBrainz20k window: text one step larger (14 px body, 12 px secondary, scoped to the window) and a fully opaque frame (FloatingWindow option opaque) for reading in AR; docs
+- Phase 5 plan: worked example - literature for a subset of proteins (subagents inside the turn for small subsets, a job plus follow-up for large ones, Europe PMC / PubMed REST in every profile, report with roles and literature columns)
+- Phase 5 plan: steps 5a.1-5a.4 (tool-aware watchdog, activity stream, Sessions window, toasts), 5b.1-5b.6 (job protocol, runner with re-attach, start_job tool, jobs strip, completion to report, learned estimates), 5c.1-5c.4 (profiles with resume switch, profile card and badge, subagents literature / kg / tooluniverse with nested steps, server MCP servers), open questions
+- docs index: phase 5 concept as a table row
+- Concept for phase 5 (docs/agent-sessions-jobs-subagents.md): sessions overview window with status dots and toasts, switchable profiles quick / research (reopen with resume), backend-owned background jobs (start_job, job events, strip with cancel, completion message -> follow-up report, restart re-attach, learned estimates), subagents via the SDK agents option (literature, kg, tooluniverse) with nested steps, tool-aware stall watchdog; phasing 5a-5c and decisions to confirm
+- Ring menu: BigBrainz20k (agent window) and Reports in Windows > Compute, so the agent is reachable in XR; CLAUDE.md points to the backend's own CLAUDE.md and docs
+- BigBrainz20k: stalls and restarts visible (Thinking… after a step, '(no response for m:ss)' after 30 s, 'Waiting for the model' from the backend watchdog), 'What's up?' button after 3 min of a run (side question, aside event shown under the run), AR mode (xr:session-changed: microphone only, 'hold and speak', transcript sent at once; XR panels' mouse events), window.configure opens the window when it was closed (Revert closes it), window.close idempotent, subset chips follow the link's verb and skip duplicates of the same set, no inline error text on change buttons, rwr.run describes the edge flow column and leaves topN out by default; __perf.handles.emit; docs
+- Agent buttons: blue until done, green once applied; inline change links are one toggling button (click = apply, click again = revert) without the Revert button that broke line layouts; failures stay as inline text, states in the tooltip; docs
+- BigBrainz20k: push-to-talk microphone button (hold to record 16 kHz PCM via Web Audio, WAV to the backend's /transcribe, text into the composer; first press asks permission; tap / silence / blank checks with notifications; shown when /health reports transcribe); subset links and blocks render as chips (click = set, + = add, book = save to library under the link name or a derived one; feedback per click); settings blocks tolerate a {id: value} map and an auto label; window descriptions mark required columns and window.open refuses an empty Enrichment / Distributions / Heatmap / Scatter / UpSet / meta network; auto-accept default off; composer status without 'Graph uploaded'; docs
+- Change cards (src/windows/agent/changeCard.ts): settings / window blocks and cmd: links to settings.set, window.open, window.configure, window.close share one state machine (proposed -> applied -> reverted -> ...) with inverses, so Revert and Apply again undo / redo exactly what the card did; blocks apply themselves with 'Auto-accept viz changes', links wait for a click and get Revert beside them; state persisted through feedback (proposalId, outcome, data.next) and restored on replay; commands window.configure (recreate in place with merged config, by id or newest of a type, returns new id + previous values) and window.close, window.open returns the id; snapshot lists open windows with ids; card helpers in cardUi.ts; docs
+- Highlight mode stays with the user: highlight.* settings are readOnly in the app catalog (agent knows them and their current values), settings.set refuses them with the Settings window location, settings cards show them as 'By hand' rows that Accept skips; docs
+- Agent window is 'BigBrainz20k' (title, + menu, Continue button) with a UI-only greeting label at the top of every session; app catalog: one-line notes for every ring setting and action (SETTING_NOTES / ACTION_NOTES) so the agent knows what they do; docs
+- Agent window: 'Auto-accept viz settings' checkbox (default on, config autoAccept) - live settings cards apply themselves and get a Revert button, feedback says auto-accepted; window descriptions: useGlobal defaults per window and frozen for Distributions / Enrichment; catalog schema: description on settings and actions; XR panels spawn 0.8 m ahead (was 0.3 m)
+- Agent phase 4 step 4: window descriptions (src/windows/WindowDescriptions.ts: purpose, scope, initialConfig options with column kinds / enum values per window) feed the app catalog with the values allowed right now; command window.open({type, config} or flat options) validates against them (wrong value = error, unknown key = toast) and opens the window; __perf.handles.runCommand for scripted checks; docs for phase 4 (AppCommands, agent window, architecture, plan status, CLAUDE.md rule)
+- Agent phase 4 step 2: compute commands rwr.run (runSingleRWR + edge metrics + top-N subset) and cluster.run (k-NN + Louvain / Leiden column) with effect 'compute'; app_request round trip - the Agent window runs a command for the agent, re-uploads the graph when it changed and posts the result
+- Agent phase 4 step 1: app catalog from the ring menu model (settings with options / ranges, actions, windows, commands) sent to the backend when it changes; viz settings in the snapshot; commands settings.set, menu.run, subset.action; settings card with Accept; MenuModel.listMenuSettings / setMenuSettingValue / runMenuActionById
+- Report card: all report nodes as a draggable 'N nodes' chip instead of a Select button; plan: phase 4 scope (app catalog from the ring menu model, settings.set / window.open / rwr.run / cluster.run, run_app_command round trip, settings card with Accept)
+- Node chips (src/ui/NodeChips.ts): report node ids and role counts are clickable (set subset, Shift+click adds) and draggable like table rows; used in the Report / Reports windows and the agent's report card; Report window without Fly to; agent run footer without model and cost; docs
+- Agent window (phase 3): results into the app - markdown with resolved session files, cmd: links as buttons, asdf10k blocks as subset / command cards, Mermaid (lazy); columns proposal card (Add runs columns.addFromTsv) and report card; feedback of every click to the agent; ReportStore (in memory), Report window (select / fly to / save as subset / continue in agent) and Reports window; commands subset.add, columns.addFromTsv; reports:changed event; docs
+- Agent plan: reports and actions in markdown (section 16), phases 3-4 re-scoped after the design interview
+- No native dialogs: in-place renaming of subset list and query library entries (InlineEdit), library adds under a timestamp name, toasts instead of alert, destructive actions act at once and say so; AppCommands registry with subset.saveToLibrary (shared by Subset List, RWR and the agent) and subset.set; docs/core/AppCommands.md
+- Agent window (phase 2): the agent gets the app state - graph export (nodes + edges TSV with every column, gzipped upload when its hash changes), ColumnCatalog column statistics, app snapshot (layouts, selection, active node, subset library, open windows) sent with every message; active-node chip, upload status line
+- CLAUDE.md: no attribution trailers in commit messages
+- CLAUDE.md: tags only via release-it here; the backend repo tags its phases
+- Agent window (phase 1): chat with the Claude agent of ../asdf10k-agentic-backend - sessions, SSE replay + live events, streamed markdown, tool steps, to-do list, Stop; AgentClient + protocol copy (zod), /agent-api Vite proxy, config key agentBackendUrl, ctx.getCurrentDataset; plan docs/agent-window-plan.md with phase 0 findings; CLAUDE.md: commit continuously, tag milestones
+- XR panels: laser events use document.elementsFromPoint instead of measuring every element per move, rasteriser skips subtrees outside the paintable area; Enrichment table shows the top 50 of the current sort (a 2,500-row table made AR slow while the laser was on it)
+
+## 0.6.0 (2026-10-05)
+
+3 commits.
+
+### Changes
+
+- XR: config windows and default AR box wait for a tracked head pose (were placed at the untracked origin, near the floor); tooltip panel swapped in for larger content is placed before it shows (one-frame flash); B with the ring menu open closes it and opens the metadata tooltip; XR ring re-reads item values after presses and ~4x/s (subset layout stayed 'on' after a layout change); docs: Quest Browser crash notes, UI event bus TODO
+- AR layout change: box fit blends with the layout animation (no refits at 0 / 1.2 / 2.6 s), session transform applied in the same frame (no flash after rebuilds); animations keep node scale (highlighted nodes no longer shrink); offline metadata cache (scripts/fetch-metadata-cache.mjs, config.json metadataCache, falls back to the web); RWR edge flow ticked by default; docs/core/Render-pipeline.md flowcharts
+- XR: clustering / RWR no longer hang (nextFrame instead of a bare rAF promise), Chart.js animations off during sessions (Heatmap drew black); RWR edge metrics (flow, min flow, geometric mean) as edge columns, checkboxes in single and multi run; clustering preselects the current layout, min cluster size 5, next free column name; new columns refresh Distributions / Heatmap dropdowns and pass presentation-mode limits; larger Clustering / RWR windows; edge min width up to 100
+
+## 0.5.2 (2026-10-04)
+
+33 commits.
+
+### Changes
+
+- gitignore bench/results/unnamed*.json (the collector's name for requests without ?name=, e.g. stray port probes)
+- XR: config.json openWindows[].config.xr places panels relative to the head; presentation-mode reset chord also clears the subset and reopens the config windows; first tooltips no longer shrunk (phone AR detected via interactionMode, shrink set per use); XR UI unlit; hemisphere light + headlight that follows the head in XR; Subset List 30 % taller, no edit / delete in AR; bar chart labels black 12 px, no horizontal scrollbar
+- Presentation mode: dropdowns limited to listed options ({ id, children } in menuItems), menu item renamed Presentation; Enrichment opens as bar chart; AR box edit: squeeze or trigger grabs, A / B leave; default box 2 x 2 x 0.9 m, 0.8 m above the floor or 1.1 m below the eyes without floor data
+- XR tooltips built at the session's scale (spare panels were built before the AR mode was set: 10x too large in AR); AR box: default 2 x 2 x 1.5 m, reset chord squeeze + trigger + thumbstick down, centre handle moves the box, laser grabs out-of-reach corners, recentring ends the edit mode
+- XR ring menu: labels fitted into their wedges (measured text, 1-2 lines or label + value on one line, no squeezing, one font size per ring), keyboard hints dropped, no item counts in presentation mode, deeper rings, readable hover colour
+- AR box: default 2 m box in front of the user instead of the corner setup at start; edit mode (Navigation > AR: edit box) drags corners with squeeze, A / B / trigger leave; box lines configurable (config.json ar.showBoxLines, ring menu)
+- comments name the metadata tooltip instead of the removed thumbstick-up gesture
+- XR: the metadata tooltip (B / trigger) shows its 3D model (metabolite or AlphaFold protein) faded in 5 cm above the panel once the data is shown, replacing the thumbstick-up gesture; tooltip panels fade in / out and tilt towards the head (yaw + capped pitch, no roll); tooltips.show3dModels in config.json and an XR 3D Models menu toggle
+- AR: thumbstick up on a protein node shows its AlphaFold model as a cartoon (helix ribbons, strand arrows, coil tube, pLDDT colours; secondary structure from the mmCIF)
+- XR panels: wrapped text drawn line by line (per-word ranges, split after hyphens) instead of one overflowing line; single-line text positioned from its first word (no glued leading space)
+- UniProt tooltip: sections selectable with tooltips.showOnly.uniprot in config.json (default all); length, molecular weight and drug target count in one line, no Sequence header, drug targets only counted
+- UniProt: one request per protein (the search hit is the full entry), quoted gene query (no double encoding); UniProt and PubChem requests time out after 8 s with one retry, network errors are not cached
+- PubChem: try every id column in order (name when the KEGG id has no compound), KEGG via the KEGG substance first; KEGG substance classes (Ceramide, ...) shown as classes with an example compound marked as such, no 3D model for them
+- XR tooltips staged across frames: prepared hidden after 60 ms, raster in a timer task, upload ahead of time (initTexture), new panels without in-frame raster and compiled in the background (compileAsync), shown at 100 ms; pool of 3 panels in 40 px steps, pre-warmed at session start; outgrown panels swapped when ready; B during dwell opens the metadata tooltip
+- XR hover tooltips: open after a 150 ms dwell (head turns no longer build a tooltip per node passed), reuse the last closed panel, debug logging only with ?xrdebug, profiler sections for tooltip measure / new panel / raster
+- AR: thumbstick up on a metabolite node shows its PubChem 3D conformer as a ball-and-stick model above the node while held; XR panels re-rasterise when an image inside finishes loading
+- extra tooltips per node type: config.json "tooltips" picks the fetcher for Ctrl (extra1) and Shift (extra2) by a type column; PubChem fetcher for metabolites (KEGG id or name: structure, formula, weight, description, links); tooltip images load with crossorigin so COEP no longer blocks them (GeneCards image works again)
+- trim column names on load (old presets from CRLF headers stored e.g. "strength\r" and silently fell back to the default); tooltip fetch column trimmed too
+- lasso select: Shift adds, Ctrl/Cmd removes; lasso cursor (plain / + / -), red line when removing; lasso icon in the top bar
+- fix all TypeScript errors (17 -> 0) and run typecheck in pre-commit; UpSet 'Size up' and 'Name Z-A' sorted the wrong way, Map navigation mode was reported as Orbit
+- edges faded to opacity 0 (isolate mode, fade slider at 0) are left out of the edge mesh: no GPU work, no picking, and no black depth gaps cut into visible edges
+- focus button: first press keeps the viewing angle (centre and fit only), repeated presses cycle alternative views circling the subset (face-on via PCA, turned and tilted ~40 degrees, back side)
+- molecular window: config.json window_molecular.fetchIdColumn picks the node column used as the UniProt query (then geneid / gene_id, then the label); one lookup instead of three copies; exported with the config
+- size sliders: ranges widen to include values set by a config or preset; node size scaling 0.01-6, min size 0-5; XR ring slider fill clamped, small values labelled with 3 significant digits
+- categorical palette: purple and cyan before orange (yellow and orange looked alike on lit nodes)
+- the N results count is a chip for all results - click sets the subset, drag carries all node ids
+- bulk subset selection from search pulses all selected nodes (300 ms, 10x) instead of making the first one the active node
+  Single node: still becomes the active node (pulse, molecular viewer, logbook). Pulse restores each
+  node's size from right before the pulse (subset nodes are drawn larger) and finds the node again
+  every frame (subset changes rebuild the meshes); group pulses above 2,000 nodes are skipped.
+- field autocomplete, matching-item tags, toggle add/remove, has ignores case
+  - /field value finds sparse columns (column looked up across all nodes, not only the first);
+    numbers match exactly only in numeric columns
+  - typing "/" lists fields (type, node count; ranked exact > prefix > "_" segment > contains),
+    arrows + Tab/Enter or click pick one; "/field " then shows all of its values as tags
+  - tags row for _c / _a / _kv / _c_kv columns: unique matching items with node counts, A-Z;
+    click sets the subset, drag works like chart bars (DRAG_NODE_IDS)
+  - row + button toggles the node in and out of the subset
+  - formulas detected by comparison operators or AND / OR / has as separate words; has is
+    case-insensitive (also in the Subset query window)
+  - close button, Esc closes the search even when focus left it (without clearing the subset),
+    window never taller than the screen, short hint line
+
+### Fixes
+
+- fade other edges also for a subset without edges of its own (then all edges fade)
+
+### Refactoring
+
+- chemistry code in src/chem (pubchem lookups, SDF parser, molecule model); tooltip formatting in src/tooltip/PubChemTooltip.ts; no behaviour change
+
+### Documentation
+
+- CLAUDE.md for agents (commands, rules, pitfalls, headset testing) and docs/README.md index of what each doc answers
+- search window (modes, field autocomplete, tags, selection and pulse), config window_molecular and slider range widening, active node event, edge fade without subset edges, palette order
+- todo - try XR on the WebGL backend with multiview and composition layers
+
+## 0.5.1 (2026-10-02)
+
+6 commits.
+
+### Features
+
+- **xr:** thumbstick scrolls the window under the laser; poll ResizeObservers during XR so charts relayout after a resize
+- **xr:** resize window panels with the laser from the bottom-right corner; charts announce redraws instead of 30-frame panel polling
+- fog distance default 1000, slider range 5-4000
+- **xr:** separate laser ranges for tooltips (1 m) and trigger toggle (2 m) in config.json
+- **xr:** laser pick range configurable as xrHoverMaxDistanceMeters in config.json, default 1 m
+
+### Fixes
+
+- **xr:** re-raster the panel after a thumbstick scroll (no scroll events while presenting)
+
+## 0.5.0 (2026-10-02)
+
+79 commits.
+
+### Changes
+
+- version label separates branch and hash with a space
+- big version label clipped 5px at the bottom instead of 11px
+- big version label half size, fainter, clipped into the bottom-right corner
+- version label shows the version 8x larger and faint, branch/hash stay small
+- disable the left controller; skip window hover dispatch while the laser rests
+- click a bar/segment/heatmap cell to set it as subset; XR trigger replaces stick-up
+- clicking an edge adds its missing endpoint(s) to the subset, never removes
+- footer set/add-all buttons no longer fly the camera
+  The footer buttons that set or add all matching results to the subset
+  also flew the camera to frame them. They now only change the subset.
+  Enter / Shift+Enter, which share the same handler, still fly as before.
+- icon bar: focus button frames the whole graph without a subset or with Shift
+  The first icon-bar button (focus on subset) did nothing when no subset was
+  selected. It now flies the camera to show the whole graph in that case, and
+  Shift+click always shows the whole graph even with a subset set (the subset
+  itself is left alone).
+- + adds a result to the subset without flying; new arrow button flies to it
+  The per-result + button called the same handler as clicking the row, which
+  only flies the camera and sets the active node - it never touched the
+  subset. It now goes through the add-to-selection path the footer "add all"
+  uses, with just that one node: the subset grows, the camera stays put and
+  the search stays open so several results can be added in a row (the button
+  turns into a check mark once added). A second blue arrow button next to it
+  keeps the old behaviour: fly to the node and make it the active node.
+- presentation mode - config.json picks which ring menu items are shown
+  For demos the ring menu can be cut down to a short list. Every category,
+  submenu and leaf in MenuModel's SPEC now has a stable <category>.<item> id
+  (full list in docs/menu-tree.md), and config.json's new block names them:
+    "presentationMode": { "startInPresentationMode": true, "menuItems": [...] }
+  A submenu id keeps everything under it; submenus left empty disappear.
+  startInPresentationMode defaults to true when the block exists; without it
+  the feature is off. Unknown ids are logged as a console warning. Applied on
+  config.json load and Import, exported with the config.
+  Enter from Navigation > "Enter presentation mode" (ring menu action and a
+  lil-gui nav button, both only offered while available and off). Leave with
+  a secret gesture: wiggle the right stick left-right 5 times within 5 s
+  (10 alternating extremes past the stick press threshold). Toggling closes
+  any open ring so the next open rebuilds with the new item set. Only the
+  ring menu is filtered; the lil-gui panel stays complete.
+- stop auto-opening a Distributions window on every session start
+  Leftover from the first XR prototype, presumably a quick way to
+  get a panel on screen while proving HTMLMesh windows rendered in XR. It
+  opened a window nobody asked for every time VR/AR was entered.
+- correct window panels on reference-space reset, stick-gesture hysteresis, momentary on-demand tooltips
+  Taking the headset off and back on left the AR box correctly realigned
+  (previous fix) but window panels still appeared "just in front of me"
+  instead of where they were placed - their position/orientation is stored
+  once at spawn time (placeEntry), in whatever reference space was active
+  then, same problem the box had and never got the same fix. Added
+  XRWindowSurfaces.applyReferenceSpaceCorrection (applies the reset's
+  transform to every open panel's mesh position/quaternion, same as the box's
+  origin/right/forward) and wired it into main.ts's existing reset handler -
+  unconditionally, not gated to AR-with-a-box like the box correction, since
+  panels exist in VR too and have nothing to do with the AR box's state.
+  Live testing found two problems with the new thumbstick gestures:
+  - Holding the stick near the threshold re-fired the gesture repeatedly
+    instead of once per push - a single fixed threshold lets hand tremor
+    oscillate across it many times a second. STICK_SET_SUBSET_THRESHOLD split
+    into STICK_GESTURE_PRESS/_RELEASE: press arms the gesture, release only
+    re-arms it once the stick comes back past a looser band, well clear of the
+    noise.
+  - Thumbstick-down had no special handling for the ring menu being open, so
+    pickOnDemand's panel-only exclusion let it reach through to whatever was
+    behind the menu. It now dismisses the ring menu instead, same priority
+    trigger and B already give it.
+  Also: B's and thumbstick-down's on-demand tooltips (auto hover off) now
+  close the moment the button/stick releases, instead of staying open
+  afterward - a momentary "hold to show" tooltip rather than one that lingers
+  until something else happens to close it.
+- add the new auto-hover-raycasting checkbox to the ring menu
+  The ring menu isn't a generic mirror of every lil-gui controller - it's a
+  hand-curated tree (MenuModel.ts SPEC) where each leaf names a specific
+  controller to resolve from lil-gui at build time. Adding a new lil-gui
+  control doesn't make it appear there on its own; it needed its own leaf.
+  Added under Navigation, alongside the other nav-folder controls.
+  Also added "AR: set box" to docs/menu-tree.md's Navigation row, which was
+  already in the code's SPEC but missing from the doc - a pre-existing gap
+  found while updating the count for this change.
+- set-subset gesture on either stick, and an opt-out for continuous hover raycasting
+  Thumbstick-up for "set subset from hovered chart" was left-only; it now
+  fires on either stick, since there's no reason to restrict it to one hand.
+  Added a bigger one: continuous per-frame laser raycasting is the main
+  hover/tooltip cost on headset CPU (confirmed live - holding B freezes it and
+  frame time visibly improves). A new "XR Auto Hover Raycasting" checkbox (nav
+  folder, mirrored into the ring menu like every other lil-gui control) lets
+  it be turned off; graphSettings.xrAutoHoverPick defaults to true, so nothing
+  changes unless someone opts out. Phone AR always keeps it on regardless -
+  there's no button/stick to fall back to picking on demand with there.
+  With it off, nothing is picked per frame at all; three on-demand gestures
+  replace it, each doing a single pickOnDemand() call instead (same
+  range/panel-priority rules as continuous hover, just computed fresh instead
+  of kept live by a per-frame loop):
+  - Trigger: toggles whatever's hit into the subset (previously relied on
+    hoveredNodeId already being current).
+  - B: opens straight into the metadata tooltip for whatever's hit (previously
+    only switched an already-open tooltip to metadata mode - there is no
+    already-open tooltip without continuous hover).
+  - Either stick down (new): opens the regular tooltip for whatever's hit - a
+    no-op while auto hover is on, since it already shows tooltips continuously.
+- thumbstick-up sets the subset from a hovered chart bar/cell/row (replaces drag-and-drop for VR/AR)
+  Desktop lets you drag a bar (or stacked-bar segment), heatmap cell, or UpSet
+  row onto the Subset list to set/add/intersect/remove those nodes. An actual
+  drag gesture in VR/AR proved too fiddly to aim and release correctly in 3D.
+  Replaced with a single gesture: pushing the left thumbstick up immediately
+  sets the current subset to whatever's under the laser right now, in an open
+  distributions chart, heatmap, or UpSet plot. Right stick already drives
+  locomotion, so left was free. No drag, no release point to miss.
+  New shared module (DragNodeIdsHover.ts) holds "whatever's currently hovered
+  for a potential node-id drag," kept in sync by each chart's own existing
+  hover-tracking - which already runs continuously from real mouse movement on
+  desktop, and identically from XR's laser-hover synthetic mousemove dispatch
+  (XRWindowSurfaces.dispatchPointer), so no new hover-tracking code was needed
+  per chart:
+  - DarkChart.ts: pushes it from the same hoveredIndex/hoveredSegmentIndex
+    mousemove already maintains for the tooltip.
+  - HeatmapWindow.ts: factored the Chart.js cell hit-test out of mousedown into
+    a shared helper, added mousemove/mouseleave using it (there was no
+    continuous hover-tracking here before, only a mousedown-time snapshot for
+    the drag source).
+  - UpSetWindow.ts: one line in the onHover callback the library already calls
+    continuously.
+  XRInteractionManager reads this global on the left stick's up edge and calls
+  a new setSubsetFromNodeIds (main.ts) - the same "replace the current subset
+  outright" primitive the desktop drop zone's top-left "set" quadrant already
+  uses, just without needing a name round-trip since this path already has
+  node IDs.
+- scope phone AR back down to calibration taps + hover + smaller tooltips
+  Reverts the ring-menu-via-tap, tap-as-click-on-windows/nodes, and the WebXR
+  DOM Overlay "Menu" button entirely - menu access on phone is being designed
+  separately later, not worth the DOM-overlay plumbing and extra interaction
+  surface right now. Removed: arOverlayRoot/arMenuButton (fields, constructor
+  setup, CSS, pointerdown handler, session show/hide), the domOverlay/
+  'dom-overlay' sessionInit wiring in main.ts (back to exactly what it was
+  before), and handleScreenTap's ring-menu-press/panel-click/node-toggle
+  branches.
+  Kept, unchanged: a tap still records an AR box calibration corner at the
+  phone's own position (the only thing a tap does now), hover/tooltip still
+  falls back to a screen-centre ray when no tracked controller is connected,
+  and tooltips still render at 30% size in that same handheld case. Pulled the
+  repeated "no controller connected" condition into one isHandheldArMode()
+  helper both now share.
+- fix the AR menu button not opening the ring menu on phone
+  'click' on a WebXR DOM Overlay button is a known-flaky event on Android
+  Chrome inside an active immersive session - the touch-to-click gesture
+  synthesis doesn't always fire while presenting, which would make the button
+  visibly present but do nothing on tap, exactly as reported.
+  Switched to 'pointerdown', which fires directly off the real touch and is
+  the pattern other WebXR dom-overlay UIs rely on for this reason.
+  preventDefault() suppresses any compatibility click Chrome might still
+  synthesize afterward, so a single tap can't end up toggling the menu open
+  and then immediately closed again; touch-action: none on the button stops
+  the browser treating the tap as a scroll/zoom gesture first.
+- phone AR - smaller tooltips, taps act as clicks, dedicated menu button
+  Two phone-specific follow-ups, both gated behind the new isHandheldArMode()
+  (presenting + AR + no tracked controller connected at all), so neither can
+  ever trigger on a real Quest/controller session:
+  Tooltips were sized for a headset's wide field of view and filled a phone's
+  much narrower one. createTooltipMesh now scales the panel to 30% in handheld
+  AR - scaling the mesh itself rather than the group, since
+  positionTooltipBillboard resets the group's own scale to 1 every frame for
+  billboarding.
+  handleScreenTap previously treated every tap as an A-button-style menu
+  toggle, which meant tapping a window panel did nothing - there was no way to
+  interact with windows on a phone at all. A tap is now a regular click
+  wherever the screen-centre ray is pointing: a window panel under it gets the
+  click (mousedown/mouseup/click, same dispatch a controller trigger uses), an
+  open ring menu gets a press on whatever it's aimed at, a node under it
+  toggles into the subset. Opening/closing the menu moved to a dedicated "Menu"
+  button added to a WebXR DOM Overlay (arOverlayRoot/arMenuButton, passed into
+  ARButton.createButton's sessionInit from main.ts) - shown only in handheld AR,
+  bottom-left of the screen, since a tap in open space needs to stay a
+  "nothing there" no-op rather than silently spawning the menu.
+- don't double-handle Quest controller triggers through the new phone-tap listener
+  A tracked controller's trigger pull (Quest Touch, etc.) fires the exact same
+  session-level 'select' event a handheld phone's screen tap does - three.js's
+  own per-controller select/trigger handling is built on relaying that same
+  event. The previous commit's session-level listener had no guard, so on
+  Quest 3 every trigger pull would ALSO call handleScreenTap() alongside the
+  existing gamepad-polling-based handleTriggerDown() - double-firing actions,
+  and during AR box calibration, recording two corners per single trigger
+  press.
+  Guarded on event.inputSource.targetRayMode === 'screen', which is only true
+  for an actual handheld tap; a tracked controller's targetRayMode is
+  'tracked-pointer', so its trigger presses now fall straight through
+  unaffected, exactly as before this feature existed.
+- support handheld phone AR (screen-tap input, no tracked controller)
+  Android Chrome's immersive-ar has no gamepad-backed controller at all - taps
+  arrive as a one-shot 'select' event on the XR session itself, not a
+  persistent 'connected' controller the existing trigger/button polling loop
+  depends on. Without a controller object, hover/tooltip and AR box
+  calibration both silently did nothing on a phone.
+  - AR box calibration: a tap now records the phone's own camera position as a
+    corner (there is no separate controller/tip position on a phone - the
+    phone IS the pointer), reusing the same addCalibrationPoint flow a
+    controller trigger press already uses.
+  - Hover/tooltip: when no tracked controller is connected, falls back to a
+    ray from the phone's screen centre (the XR camera's forward direction),
+    with a tighter range (0.3 m vs. the controller laser's 0.5 m) and no
+    touch-pick (a phone has no "tip" to touch a node with, only a ray).
+  - The ring menu's own hit-test gets the same screen-centre-ray fallback, so
+    it can still be aimed at while open; a tap presses whatever it's aimed at,
+    or opens/closes the menu otherwise - standing in for both the A button and
+    the trigger, since a tap is the phone's only input.
+- correct the AR box when the headset recentres (e.g. taking it off and back on)
+  Quest (and other headsets/phones) can recentre the local-floor reference
+  space at any time - most commonly when the headset is taken off and put
+  back on. The AR box's origin/right/forward were captured as absolute
+  coordinates in whichever reference space was active during calibration, so
+  after a recentre they describe the wrong place in the new one and the whole
+  graph appears to jump relative to the physical room, even though nothing
+  about the box itself changed.
+  Listens for the active XRReferenceSpace's 'reset' event (re-attached lazily
+  each frame whenever three.js hands back a new reference space, since a
+  'sessionstart' listener can fire before that reference space actually
+  exists). When the event carries a correction transform, the stored box's
+  origin/right/forward are corrected through it and reapplied, so the graph
+  snaps back into its physically-calibrated place with no user action. When no
+  transform is available, the old coordinates are meaningless, so recalibration
+  starts automatically instead of silently rendering the graph in the wrong
+  spot.
+- fix node-drag direction (rotation/scale never inverted) and make AR 1:1 with the hand
+  Squeeze-drag computed the controller's real-world movement correctly, but
+  then added that world-space delta directly onto the node's graph-space
+  position, and moveNodeInstanceToWorldPosition wrote it straight into
+  node.position and the instance matrix as if world space and graph space
+  were the same thing. That was true back when graph meshes had no object-level
+  transform, but VR's floor rotation and AR's box-fit (rotation + uniform scale
+  + per-axis stretch, see setGraphTransform/PositionStretch) both give the
+  meshes a real transform now, so a drag ended up moving nodes along some
+  rotated/skewed combination of graph axes instead of the direction the hand
+  actually moved.
+  Fixed by converting the controller's world-space delta into graph units -
+  undo the mesh's rotation and uniform scale, then undo the AR stretch - before
+  adding it to the node's actual graph-space start position
+  (nodeDragNodeStartGraph). moveNodeInstanceToWorldPosition is renamed
+  moveNodeInstanceToGraphPosition and now takes a graph-space position like
+  every other position writer in this file; it also applies the AR stretch to
+  the incident-edge endpoints it rebuilds, matching every other instance-matrix
+  builder (previously an inconsistency masked by the position bug itself).
+  VR still amplifies hand movement 5x*xrWorldScale (the world is far larger
+  than the room, per the existing "some scaling of movement" behavior); AR now
+  moves exactly 1:1 with the hand, since the room is human-scale already.
+  Verified with a standalone round-trip test: transforming a synthetic
+  world-space hand movement into graph units and back through the same
+  rotation/scale/stretch reproduces the original movement exactly, for both a
+  VR-style floor rotation and an arbitrarily rotated/scaled/stretched AR box.
+- ring menu stays put instead of following your head, B-hold freezes hover, tighten hover range to 0.5m
+  The A-button ring menu re-targeted its position/orientation toward the
+  camera every frame (lazy lerp/slerp in XRRingMenu.update), so it drifted
+  along as a head-locked HUD instead of staying where it was placed. It now
+  spawns in front of you once (unchanged) and then holds that world-space
+  transform until closed.
+  Holding B on a node (edge focus / metadata tooltip toggle) used to keep
+  re-picking hover every frame like normal, so swinging the laser off the node
+  while reading its metadata tooltip would close it or hover something else.
+  Hover is now frozen entirely for the duration of the hold - no re-pick, so
+  the pinned node's tooltip and edges stay put regardless of where the laser
+  points, and normal hover picking resumes the instant B is released.
+  HOVER_MAX_DISTANCE_METERS: 2 -> 0.5, tightening how close a node/edge has to
+  be to the controller before hover (tooltip, B edge focus, trigger-toggles-
+  subset) engages at all.
+- fix AR box building on the wrong side of the front edge
+  boxFromCorners computed forward as a fixed UP x right, regardless of which
+  side corner 3 actually landed on - depth used Math.abs() so its magnitude
+  was always right, but the box itself still extruded toward whatever forward
+  happened to be, which could be the opposite side from where corner 3 was
+  pressed (dead giveaway: content ends up mirrored across the corner1-corner2
+  axis from where it was calibrated).
+  Fixed by choosing which of corner 1/2 anchors the origin, and which way
+  right points, based on corner 3's actual side, so forward always points
+  toward it. Negating both right and forward together leaves their
+  determinant unchanged (two of three basis columns flip sign), so this still
+  can't reintroduce the earlier mirrored-rotation bug that a lone
+  forward.negate() used to cause.
+- flat 2m hover range, safer node-drag re-enable, content-sized tooltips
+  Laser/touch hover (tooltip, B edge focus, trigger-toggles-subset) now only
+  picks a node/edge within 2 real-world metres of the controller, in both VR
+  and AR (HOVER_MAX_DISTANCE_METERS, flat physical distance since hit.distance
+  is world-space) - a laser wave across a distant part of the graph should not
+  silently toggle far-away nodes into the subset.
+  Squeeze-on-node drag, disabled in an earlier session for firing too easily
+  while pointing, is back (XR_NODE_DRAG_ENABLED) but now gated by the same
+  panel-hit-first and 2m range checks as hover, addressing the original
+  complaint at the source instead of just flipping the flag back.
+  Hover tooltips are sized to their actual content (measureTooltipContentSize)
+  instead of one large fixed box for every tooltip, and centered on the node
+  instead of anchored by a top-left corner. The metadata (Ctrl) fetch now
+  triggers a resize once it lands, rather than clipping into the box the
+  loading placeholder needed.
+- laser on a window panel no longer hovers/triggers/tooltips the graph behind it
+  Window panels already won priority for trigger clicks (handleTriggerDown
+  returns after dispatching to a panel hit), but the separate per-frame hover
+  step (updateGraphHoverFromController, which drives hoveredNodeId - used for
+  the B-held edge focus and, since the last commit, the trigger-toggles-subset
+  action - and the hover tooltip) ran unconditionally regardless of whether the
+  same ray was already hitting a panel. Pointing at a window therefore still
+  picked, and could toggle into the subset, whatever node happened to be behind
+  it, and still opened its tooltip.
+  hoverSurface's raycastSurfaces result (already computed once per controller
+  per frame to dispatch the panel's own mousemove) is now also used to gate
+  updateGraphHoverFromController the same way the ring menu already gates it
+  ('Ring menu first: while the laser is on it, the graph gets no hover') - no
+  extra raycast. A related bug surfaced by the same code path: the function
+  returns before reaching its own grace-period tooltip-close logic whenever
+  gated (ring menu, launcher, and now panels), so a tooltip already open from a
+  moment before never closed on its own once gated - new closeAllTooltipEntries
+  helper closes it immediately instead of leaving it stuck.
+  Verified live on the headset: aiming at the nearest node opens its tooltip
+  (hoveredNodeId set, 1 tooltip entry); swinging the same ray onto the
+  auto-opened distribution panel clears both immediately (hoveredNodeId null,
+  0 tooltip entries).
+- subset declutter layout stays inside the AR box
+  boxTransformForNodes now also returns the graph-space bounding box the room-box
+  fit was computed from (any position within it maps inside the physical box).
+  A new GraphContentBounds.ts singleton (plain data, no three.js, readable from
+  the worker-request-building code) carries it from main.ts's applyArBox/
+  leaveArPresentation into SubsetLayoutCompute.ts, which clamps the declutter
+  result into it as a final per-axis step, after the existing expansion cap.
+  Outside AR (VR, desktop) bounds is null and the declutter is unconstrained,
+  same as before. Verified: a cluster placed near the box edge expands past it
+  without a clamp (x=1.086 against a x<=1 box) and lands exactly on the edge
+  (x=1.000) with one supplied.
+- fix world-space picking/tooltips, click toggles subset, and a box-calibration mirror bug
+  Picker: pickGraph's hit point/distance were in the hit mesh's local units
+  (bestT along the local ray), but XR sessions now scale/rotate the graph
+  meshes, so tooltip anchors and the distance gate were wrong or missing.
+  The hit point and distance are now computed in world space via the hit
+  mesh's matrixWorld.
+  Trigger on a node now toggles it into/out of the current subset (mirrors
+  the desktop click-in-selection-mode behavior) instead of only switching
+  the tooltip mode; the metadata (Ctrl) tooltip toggle moved to the B button,
+  held together with the edge-focus behavior it already had there.
+  ARBox: boxFromCorners built forward as UP x right (a proper right-handed
+  basis, right x forward = up) but then negated it when the third corner
+  fell on the 'other' side, which flips the basis into a mirror (det -1).
+  Building a rotation matrix/quaternion from a mirrored basis
+  (boxTransformForNodes, added when positions/scale became a mesh
+  transform instead of rewritten positions) produces a garbage rotation,
+  which showed up as the graph shifting outside the box and losing its
+  correct orientation -- happening for roughly half of all calibrations,
+  whichever side the person naturally pressed the third corner on. forward
+  is now always the proper UP x right; depth is the unsigned distance
+  instead of a sign-flip. Verified: det=+1 and identical correct node
+  placement for both corner-3 sides.
+- stretch only positions into the AR box, meshes keep a uniform scale; slider drags with the trigger
+  The AR fit is split: a uniform mesh scale (cube root of the three factors)
+  sizes nodes and edges without deforming them, and the anisotropic remainder
+  is applied to the instance positions when the matrices are built
+  (PositionStretch.ts, used by the mesh builders, the animation loop, the
+  picker, touch picking and tooltip anchors). Node positions stay untouched.
+  Ring menu sliders: the value follows the laser only while the trigger is
+  held on the gauge; releasing ends the drag, the gauge stays open until the
+  laser pulls back or B.
+- graph transform instead of rewriting positions and sizes (VR floor, AR box)
+  The graph meshes now carry one session transform (XRInteractionManager
+  .setGraphTransform): VR a -90 degree rotation about x, AR the rotation plus
+  per-axis scale that fits the bounding box into the room box
+  (boxTransformForNodes). Node positions, node/edge size settings and every
+  layout stay in graph units, so the desktop sizes keep their relation to the
+  graph, 'next layout' no longer explodes the graph (the AR fit is refitted on
+  layoutChanged, again after the animation settles), and leaving a session just
+  drops the transform. Touch picking and tooltip anchors map through the mesh
+  matrix.
+- trigger on a tooltip node opens the metadata tooltip; ring dropdowns hide layout columns
+  Trigger while a node tooltip shows toggles the desktop Ctrl tooltip
+  (updateTooltip ctrl flag: UniProt fetch), with a taller host for it; a
+  MutationObserver on the desktop tooltip element mirrors the asynchronous
+  rewrites into the XR host; a new node starts plain again. Ring menu
+  dropdowns built from lil-gui controllers skip x_/y_/z_ layout columns;
+  option ids keep the original index so the selection still maps back.
+- new window panels spawn straight ahead at 0.3 m x world scale
+  They were placed on a 1.6 m (x scale) arc at a fixed 1.5 m height, which
+  put them above and beside the person. Now: along the view direction (pitch
+  included), at spawnDistance(), facing the head; several at once fan out a
+  little around that direction.
+- xr ring menu: trigger on a slider confirms the value and closes the gauge
+  The closed slider is not re-entered while the laser still rests on its wedge
+  past the ring edge; aiming elsewhere or pulling back releases it.
+- slider ranges (min/max/step) for the four size sliders in config.json
+  New src/config/SliderRanges.ts with the defaults; lil-gui controllers are
+  created from them and updated in place on config.json load and Import via
+  ConfigPersistence (applySliderRanges), exported with the config
+  (sliderRanges). The ring menu reads ranges from the controllers, so it
+  follows. Documented in docs/core/Config-persistence.md; the ppicml
+  config.json carries the defaults. Perf handle 'gui' exposes the lil-gui root.
+- xr ring menu: half the radii (dead zone 40, ring width 60, gap 2)
+  Labels keep the largest text the wedge allows: the plane spans the wedge
+  arc (1.1x, into the 1 degree gap) and the canvas text fills most of its
+  height (84 / 66 px on 512x224). Slider handle and value label scaled down.
+- sliders update the app live, at most every 100 ms
+  The trailing debounce postponed the write while the laser kept moving, so a
+  value only applied after leaving the gauge. Now a leading write plus a
+  100 ms throttle with a trailing edge.
+- 3D-native ring menu on the A button
+  The rasterised svg panel painted black, so the XR menu is now three.js meshes:
+  sector wedges per level, canvas-texture labels (name + value), an arc gauge
+  for sliders, lazy head follow at 0.8 m x world scale, laser aim by angle and
+  radius with the engine's drill/preview rules, trigger commits, B goes back.
+  Same tree and bindings as the desktop ring window (MenuModel), so lil-gui,
+  the Settings window and the XR ring stay one wiring. Text 64 px on the
+  labels, 1 degree wedge gaps, 4 px ring gap. Verified on the Quest 3: Render >
+  Show Stats toggled through the app's own onChange, 72 Hz, ~4 ms CPU.
+- A button opens the ring menu in front of the head; XR-only, laser-driven
+  The canvas launcher is replaced: A opens the ring window and places its panel
+  1.1 m (x world scale) in front of the head at eye level (new
+  XRWindowSurfaces.placeInFront), A again closes it, and the session end closes
+  it too. The ring is no longer in the desktop + menu; 'AR: set box' moved into
+  the ring (Navigation, AR sessions only). The thumbstick stays locomotion.
+- ring menu window driven by the live lil-gui controllers and an action registry
+  Vendors the pangmenu ring engine (src/menu/ring, ES module, no demo wiring,
+  onAction callback, styling and icon symbols inside the svg so the XR panel
+  rasteriser keeps them). MenuModel builds the tree from docs/menu-tree.md at
+  open time: gui leaves resolve lil-gui controllers by display name (range,
+  options and value from the controller, setValue runs the existing onChange, so
+  attribute dropdowns are always current), setting/action leaves resolve the
+  MenuActions registry, window leaves open window types. main.ts registers the
+  Settings-window highlight actions (hoisted out of toggleSettingsWindow), icon
+  bar toggles, keyboard commands (new runKeyboardCommand export), search, clear,
+  fly-to, reset view and preset save. The ring is the 'ring-menu' window type,
+  so it appears in the + menu and the XR launcher and becomes an XR panel; mouse
+  and laser drive it through the same mouse events. Open rings rebuild on
+  dataset:loaded, dataset:metadata:changed and layoutChanged.
+- every lil-gui folder starts collapsed, also when opened as a window
+  data and viz setup were the two folders left open; the lil-gui window (and the
+  XR panel made from it) now collapses all folders on open so the section list
+  fits and can be reached with the laser.
+- graph x/y plane on the floor in VR and AR
+  The layouts are flat in graph x/y with a thin z. Standing in the graph that
+  plane was a wall; it is now the floor. VR rotates the positions -90 degrees
+  about x at session start (graph z becomes height) and re-applies the layout on
+  exit; the AR box maps graph x to width, y to depth and z to height.
+- VR and AR buttons side by side
+  three's buttons reset their own left offset on every state change, so the AR
+  button landed on top of the VR button. Each now sits in a fixed 100 px wrapper
+  at its own position.
+- AR mode with three-corner room box, touch tooltips, no locomotion
+  Enter AR button (immersive-ar + webgpu + local-floor). On the first session per
+  dataset the graph is hidden and three trigger presses define a box: front-left,
+  front-right (width, yaw), far top corner (depth, height). The graph's bounding
+  box is stretched into it (distortion accepted), node and edge sizes are scaled
+  to metres, the box is saved in localStorage and drawn as a wireframe; the
+  launcher gets 'AR: set box' to redo it. In AR the stick does nothing, tooltips
+  open by touching a node with the controller tip (6 cm), the laser stays for
+  panels. XR metre constants now go through xrWorldScale() (10 in VR, 1 in AR).
+  Fog, background, clear alpha and sizes are restored on session end and the
+  layout is re-applied from the columns.
+- tooltip panel always in front, none for far nodes
+  The tooltip material skips the depth test and renders last, so nodes and
+  edges between the person and the panel never cover it. Hover tooltips only
+  open for nodes within 50 units along the laser (TOOLTIP_MAX_DISTANCE); farther
+  nodes still count as hovered for the B edge focus.
+- subset list: header toggle to hide the text field and button row
+  Same lightning toggle as the subset builder's editor toggle. With the editor
+  hidden the saved-list library takes the whole window, which is what an XR
+  panel of saved subsets needs. State is persisted as editorVisible in the
+  window config.
+- tooltips follow the laser; 2 degree ray tolerance
+  The B button no longer opens or closes tooltips: a panel appears while the
+  laser is on a node and is removed 250 ms after it leaves. B still selects the
+  node whose incident edges are focused while held. The XR ray tolerance grows
+  from 0.6 to 2 degrees: at the distances reached with the 10x world scale a node
+  of radius 1.2 units spans under a degree, so nodes were practically never hit
+  (the console showed edge hits only). Perf handle 'xr' exposes the manager.
+- text fields stay focusable; only the subset list stops focusing its textarea
+  Drops the document-level focus guard and the panel-click focus suppression
+  added earlier today. Clicking a saved list in the subset list window no longer
+  calls textarea.focus(), which is what opened the headset keyboard; every other
+  text field takes focus as before, on desktop and in VR.
+- graph keeps its flown position across mesh rebuilds; no text focus while presenting
+  Locomotion moves the scene children, and every selection change rebuilds the
+  graph meshes at the origin, so applying a subset snapped the graph back and
+  felt like a teleport. The manager now accumulates the locomotion offset, gives
+  it to instanced/batched meshes that appear afterwards, and moves everything
+  back when the session ends. A document-level focusin guard blurs any text
+  field while presenting, whichever code path focused it, so the headset
+  keyboard stays closed.
+- Revert "xr: keep the tooltip panel clear of its node"
+  This reverts commit 9864d5702561a44490b51ef7bf52031cb3d1362a.
+- no teleport on subset clicks, no virtual keyboard, node drag off
+  - CameraAnimator: flyToNode / flyToShowNodes return immediately while an XR
+    session presents (setFlySuppressed installed from main.ts). In WebXR the
+    camera is the rig, so a fly-to moved the person when a subset was applied.
+  - XRHTMLMesh: panel clicks no longer focus text inputs, and any text-field
+    focus the window code sets after a click (subset list, subset builder) is
+    blurred, so the headset keyboard stays closed.
+  - XRInteractionManager: squeeze-on-node drag disabled behind
+    XR_NODE_DRAG_ENABLED; double squeeze relayout unchanged.
+- keep the tooltip panel clear of its node
+  Anchor at the node centre and push the panel's top-left corner 1.6 node radii
+  plus a small gap right and down, using the hover hit point (on the node surface)
+  to measure the rendered radius. Before, the corner sat on the node centre and the
+  first lines of text were hidden behind the node.
+- world scale 10x for locomotion, panels, tooltips, launcher and laser
+  Positions normalise to 300 units since 25b5f96 but the XR metre constants were
+  tuned for the 50-unit world. One constant (XR_WORLD_SCALE, src/xr/XRScale.ts)
+  now multiplies stick speed, panel metres-per-pixel, placement radius, LOD bands,
+  tooltip offset, launcher distance and scale, laser length and node drag gain;
+  eye height stays 1.5 m. Verified in a headset session: restored windows 16 m
+  from the head at eye level, 3.3-4.8 m wide. Docs and bench notes updated
+  (no Page.captureScreenshot while presenting).
+- real dataset (ppicml) on every variant, desktop and Quest 3; edge cut-off 0 at start
+  Production ppicml (900 nodes / 1,689 edges / 153 columns, presets in config.json)
+  copied in and benchmarked: desktop baseline / BatchedMesh / current / main v0.4.0,
+  Quest 3 flat current / ?gputime / BatchedMesh, plus an immersive probe entered from
+  the Mac with a trusted DevTools click (quest-cdp.mjs click). Everything sits on the
+  vsync cap; bloom is the only heavy GPU item on the M3 (17-22 ms), BatchedMesh drops
+  frames on the headset at 2,590 draws. App now starts with edgeCutoff 0 (all edges),
+  verified on both devices; the harness restores 0. Report gets a ppicml section with
+  CPU and GPU charts and the immersive summary.
+- Quest 3 immersive probes; all-edges cost is per primitive per tile, not fill
+  Presenting at 72 Hz (1680x1760 per eye): default cut-off 70.8 fps at 2.1 ms CPU,
+  all 100k edges 8.9 fps (112 ms), edge widths x0.5/x0.25 unchanged, fixedFoveation 1
+  barely helps, half the edges 64 ms, 20 percent selection 67 fps. Roadmap re-ranked:
+  XR edge budget and billboard edges first, then framebuffer scale + foveation 1.
+- first Quest 3 headset runs over ADB + DevTools Protocol
+  quest-cdp.mjs / quest-run.sh drive bench/harness.js in the Quest Browser from the
+  Mac (adb reverse 4180/4190, adb forward 9222). Flat-window results on the round 3
+  build: CPU 1 ms per frame, 72 fps with the default cut-off, GPU 12.8-29.2 ms with
+  all 100k edges (fill-bound); BatchedMesh 1.6 fps at 105k draw calls. Report gets a
+  Quest vs desktop section and GPU series; report_perf.md 3.5, roadmap re-ranked;
+  TODO.md marks the setup steps done.
+- panel icons, borders, chart refresh, distance LOD for window panels
+  - XRHTMLMesh: inline <svg> rasterised via serialised image (currentColor baked in, cached,
+    live textures re-rastered on decode); borders inset by half width (frame was clipped);
+    periodic refresh of windows containing <canvas>; pause/dirty and per-panel update rate
+  - XRWindowSurfaces: three-tier distance LOD (near full rate, mid low rate, far/behind
+    title placeholder + paused texture), placeholder textures disposed with the entry
+  - reports: round 5 log entries, changes doc, screenshots
+
+### Features
+
+- tooltip fixes, lilgui in window launcher
+- hover tooltip
+- vr culling
+- **xr:** WebGPU + WebXR prototype for Quest 3
+  Adds an immersive-VR mode that reuses the existing graph scene and renders
+  floating-window DOM panels as interactive HTMLMesh surfaces. Renderer runs
+  WebGPURenderer with forceWebGL/multiview:false/UnsignedByte to satisfy the
+  WebXR session path while keeping the WebGPU pipeline.
+  A-button toggles a 3D launcher mirroring WindowIconBar entries; trigger
+  fires the full mousedown -> mouseup + click cycle for DOM controls; grip
+  drags panels in 3D; right stick locomotes along the headset look direction.
+  In this stack MeshBasicMaterial/Sprite do not draw inside the XR pass, so
+  HTMLMesh's material is swapped to MeshLambertMaterial in place and all
+  launcher UI uses Lambert as well. Quad-layers were dropped after they
+  failed when 'layers' is ungranted on Quest 3.
+  See docs/webgpu-xr.md for a full record of what was tried and what
+  finally worked, plus the cleanup roadmap.
+  Made-with: Cursor
+
+### Fixes
+
+- dropdown feature for htmlmesh
+
+### Performance
+
+- isolate each enrichment window's worker so they stop cancelling each other
+  computeEnrichmentAsync tracked its in-flight worker in a single module-level
+  variable, so a new call from ANY enrichment window terminated whichever
+  worker a DIFFERENT window's call was still waiting on. Worker.terminate()
+  fires no message or error event, so the superseded window's promise never
+  settled - its "Computing enrichment..." placeholder stayed up forever,
+  exactly as reported: open two enrichment windows, change the subset, and
+  only one of them ever updates.
+  Turned the module into a createEnrichmentComputer() factory instead: each
+  EnrichmentWindow instance gets its own computer with its own worker slot, so
+  a compute() call only ever supersedes that same window's own previous call,
+  never a sibling window's. The window disposes its computer on close so an
+  in-flight worker doesn't linger pointlessly.
+- run enrichment stats (hypergeometric p-value + FDR) in a Web Worker
+  EnrichmentWindow.ts's own comment already measured this at 'a few hundred ms'
+  for large subsets/categories, and it reruns on every selectionChanged while
+  the window is open - in VR/AR a selection change is a laser trigger press, so
+  that main-thread stall drops a reprojected frame there, not just a desktop
+  stutter. It previously ran synchronously inside a setTimeout(fn, 0) whose only
+  purpose was to let 'Computing...' paint first; the actual computation still
+  blocked the main thread for its full duration.
+  EnrichmentCalculations.ts gains raw-values entry points
+  (computeCategoryCountsFromValues, computeEnrichmentStatsFromValues) alongside
+  the existing node-based ones (now thin wrappers over them, unchanged
+  behavior/signature) so the worker only needs the one selected column's
+  values, not full node objects - the global background counts stay cached and
+  computed on the main thread as before (cheap, no hypergeometric math);
+  only the per-selection-change subset-stats step moves to enrichmentWorker.ts.
+  computeEnrichmentAsync.ts is the main-thread wrapper, following the
+  pcaReduce.ts/runClusteringAsync.ts one-shot-worker + main-thread-fallback
+  convention already in this codebase, terminating whichever computation was
+  still running for a superseded call. EnrichmentWindow.ts's existing
+  renderGeneration staleness guard covers the rest.
+  Verified the raw-values path produces byte-identical EnrichmentStats to the
+  original node-based path on a synthetic over-representation test.
+- run the subset declutter force layout (s key) in a Web Worker
+  sim.tick(300) on d3-force-3d is O(n log n) octree n-body repulsion per tick -
+  a genuine main-thread stall for any subset of real size, and any main-thread
+  stall drops a frame harder in VR/AR (a compositor reprojection glitch) than
+  on the desktop.
+  The pure math (SubsetLayoutCompute.ts, no three.js/DOM) is unchanged;
+  subsetLayoutWorker.ts runs it off-thread, following the pcaWorker.ts/
+  clusteringWorker.ts convention already in this codebase (one-shot Worker,
+  main-thread fallback when Worker is unavailable). SubsetLayout.ts's public
+  functions are now async; a new recalculate/enter always terminates whichever
+  worker computation was still running for a superseded call, and a generation
+  counter discards a stale result if an exit/dataset-switch/newer call landed
+  first. The three call sites (keyboard 's', icon bar, ring menu action, and
+  the selectionChanged-driven recalculate) stay synchronous void functions
+  that fire the async call and sync the icon bar once it resolves.
+- load TensorFlow.js and pacmap_tfjs on demand
+  PaCMAP is the only user of @tensorflow/tfjs; runPacmapFromMatrix is now async and imports both
+  libraries dynamically on first use. Startup chunk 5.72 MB -> 4.84 MB; the tfjs code moves to lazy
+  chunks fetched when a PaCMAP layout is requested. Docs, TODO and report log updated.
+- static instance buffers, XR panel supersampling, GPU-time runs, reports
+  - GraphInstancedMesh buffers use static usage (dynamic usage re-uploaded 6.4 MB per frame)
+  - XRHTMLMesh: 2x supersampled rasterisation + trilinear mipmaps (?panelss / ?panelnomips)
+  - perf handles: openWindow, xrPanelsSync (desktop preview of XR panels)
+  - bench: GPU-time runs (baseline / batched / instanced), report.html with timestamped log,
+    failed experiments and Quest 3 next steps; docs/performance/2026-09-28-changes.md
+- InstancedMesh for nodes and edges, direct render when bloom is off, benchmark report
+  - GraphInstancedMesh (one draw call per mesh, instanceCount = N) replaces BatchedMesh on the
+    WebGPU path; per-instance rgb/alpha/matrix in vertex buffers, hidden instances via zero-scale
+    matrix. ?batched / ?perfbaseline keep BatchedMesh for A/B runs.
+  - node/edge TSL materials read instanceColor + instanceAlpha for instanced meshes
+  - GraphPicker handles both mesh kinds
+  - RenderPipeline (scene pass + fullscreen output) only while bloom is on; never in XR
+  - harness: subset (20% selection) scenarios, culling reset fix; bench/build-report.cjs generates
+    docs/performance/report.html with charts; bench tooling excluded from eslint
+  - benchmini dataset key + overlapping-cluster verification screenshots
+- frame profiler, benchmark harness, and first render optimisations
+  - FrameProfiler (window.__perf) with named CPU sections, GPU timestamps (?gputime) and JS self-profiler
+  - bench/: harness, collector, summarizer, dataset generator, results and verification screenshots
+  - docs/performance: WebGPU vs WebGL-backend frame profile and recommendations
+  - per-instance frustum culling off by default (6 ms/frame CPU with 100k edges, no fps gain);
+    depth sort / frustum cull moved to a 'cpu experiments' folder, manual depth-write toggle removed
+  - nodes opaque unless fade-others makes them translucent (applyHighlighting toggles transparent/depthWrite)
+  - edge cylinders open-ended (8 instead of 16 triangles per edge)
+  - analytic GraphPicker replaces BatchedMesh.raycast for hover (12-28 ms -> <1 ms per pointer move)
+  - XR: DOM window scan throttled to every 10th frame; hover picking uses GraphPicker
+  - WebGL-backend XR fallback only via ?xrcompat (all headsets run the WebGPU flag); 'webgpu' is a required session feature
+  - ?perfbaseline restores the old behaviour for A/B runs; benchmini dataset key for close-up checks
+
+### Documentation
+
+- ring menu implementation notes and checks; larger ring panel
+- 2D render mode feasibility, library survey and estimate (docs/2d-render-mode.md)
+- radial menu tree and control mapping for the pangmenu prototype
+- TODO.md with the Quest 3 test setup, harness on the headset, manual XR checks, and the prioritised open work
+- full performance report (docs/report_perf.md) with measurements, changes, and the complete code review
+- fix report log entry separator
+- consolidated Quest 3 code review (15 ranked items across loop, selection, startup/bundle, XR input, GPU)
+- round 5 (XR panel icons, borders, chart refresh, distance LOD) in changes doc, reports and log
+
+### CI
+
+- gitignore
+
+### Chores
+
+- **xr:** bump three.js to 0.186.1, pick WebGL XR fallback per browser
+  three r185 restored native WebGPU + WebXR, so forceWebGL is no longer
+  hardcoded: it is enabled only when the browser supports immersive-vr but
+  lacks XRGPUBinding (Quest browser today). Desktop therefore runs the real
+  WebGPU backend and TSL node materials again, as on main. The VR button
+  requests the 'webgpu' session feature on the native path.
+  Also: port the r186 HTMLMesh change (re-rasterize on DOM input/change),
+  make XRHTMLMesh.dispose a real override now that Object3D has dispose(),
+  type the mesh's pointer events via the Mesh event-map generic, and work
+  around the UniformValueObj union no longer being callable in the r186 types.
+
+## 0.4.0 (2026-09-26)
+
+19 commits.
+
+### Features
+
+- exit subset-layout mode on node layout switch
+  Subset-layout mode's declutter positions and "restore to original"
+  snapshots are captured relative to whatever layout was active when it
+  started. Switching layouts (l/Shift+L, the Layout dropdown, or a loaded
+  preset) repositions every node underneath it, leaving those snapshots
+  stale and producing a visible glitch on later restore/recalculate.
+  Add a layoutChanged app event, emitted from the single choke point all
+  layout switches already funnel through (updateNodePositionsFromLayout),
+  and subscribe to it to hard-reset subset-layout mode (no animated exit,
+  to avoid fighting the incoming layout tween over node.position) whenever
+  it's active.
+- search + icon bar improvements, subset-layout recalc on change
+  - Fix camera glitch when flying to a single search result: clamp bounding-box
+    fly-to distance to a MIN_DISTANCE floor instead of collapsing to 0.
+  - Add per-row "+" button in search results to add a single node to the subset.
+  - Add usage hint bar at top of search UI (substring / /field / formula syntax).
+  - Remove cluster badges from search result rows.
+  - Add a leftmost icon-bar block: standalone "focus on subset" (fly camera)
+    button, plus a separate isolate-mode / subset-layout-mode toggle pair,
+    mirroring the existing Interact/Selection/Freehand pill styling.
+  - Subset-layout mode now recalculates in place instead of exiting when the
+    subset changes (via the shared selectionChanged event bus), and shows a
+    warning toast instead of silently failing when entered with <2 nodes.
+  - Show live node/edge counts next to the icon bar when the subset is non-empty.
+- remove r/m report-modal shortcuts, reorder help dialog
+  Removes the 'r' (toggle report modal) and Shift+'m' (toggle metrics
+  report modal) keyboard shortcuts and their entries in the "h" help
+  dialog. Plain 'm' (cycle interaction mode) is untouched - it's a
+  separate, still-active binding.
+  The underlying ReportModal.ts functions are left in place (unreachable
+  now, not deleted) since removing the shortcuts was the actual ask, not
+  the report-viewing feature itself.
+  Also reorders the help dialog so "Direct Shortcuts" appears before
+  "Graph Commands".
+- add "i" isolate-mode shortcut, Escape exits it first
+  Toggling isolate mode declutters the view to just the current subset by
+  forcing both node and edge fade-others opacity to 0, without touching
+  the actual slider values in Settings - the override lives entirely in
+  main.ts's buildMeshBuildSettings(), so presets/config export and the
+  Settings window always reflect the user's real values regardless of
+  whether isolate mode happens to be on.
+  Escape now exits isolate mode first when active (leaving the subset
+  itself untouched); a second Escape then clears the subset as before.
+- add "Add common neighbors" and "Prune leaf nodes" calc menu items
+  Add common neighbors: adds every node directly connected to EVERY node
+  in the current subset (intersection of neighbor sets), surfacing
+  hub/bridge nodes shared by the whole selection.
+  Prune leaf nodes: removes subset nodes whose induced degree (edges to
+  other subset nodes only) is 1 or fewer - a single pass, like Expand is
+  a single hop, so clicking again peels further layers.
+  Both live in src/graph/SubsetNeighborhood.ts, reusing buildAdjacencyList
+  from ShortestPath.ts for the neighbor-intersection case.
+- add "Connect subset" calc menu item (Steiner-tree shortest-path connect)
+  Adds the minimum set of connector nodes so all currently selected nodes
+  end up in one connected subgraph. Uses the Takahashi-Matsuyama
+  nearest-terminal-growth heuristic (2-approximation for the Steiner tree
+  problem): repeatedly runs a multi-source BFS from the connected-so-far
+  set to find the nearest not-yet-connected subset node, then adds that
+  shortest path's nodes. Unweighted (hop count) since edge weight is
+  cosmetic everywhere else in the app.
+  One-click action like "Expand subset by 1 hop", no new window. Notifies
+  with connector count added, and warns if some subset nodes are in a
+  disconnected component and couldn't be reached.
+- add Edge Table window, generalizing the subset table into EntityTable
+  Extract the column list / sort / TSV-export logic behind the node Subset
+  Table into a generic EntityTable core (row type only needs id+attributes),
+  so the new Edge Table window reuses it via a thin adapter instead of
+  duplicating it. SelectedNodesTable becomes a thin adapter over the same
+  core with no change to its public API, so SubsetTableWindow is untouched.
+  Edge Table rows are the induced subset edges (computeSubsetEdgeIds, same
+  helper Subset Network already uses); Source/Target are pinned columns
+  whose hover tooltip is the real node tooltip (buildNodeTooltipContent,
+  now exported from TooltipManager, shared with the 3D scene's node hover
+  and edge source/target mini-tooltips) shown regardless of truncation
+  (ResizableDataTable's new alwaysTooltip option) and only while hovering
+  the rendered text, not the whole cell (ResizableDataTable: wrap plain
+  tooltip cells in an inline span instead of the full-width sticky div).
+  ChartGenerators' array/kv distribution helpers now accept the shared
+  AttributedEntity shape instead of GraphNode specifically, so EntityTable
+  can call them for either nodes or edges.
+- show notification with nodes/edges added after edge-attribute expand
+  Wires the app's showNotification toast into the calc menu action deps
+  and reports how many nodes were added and how many edges matched the
+  chosen attribute criteria when "Expand ..." runs.
+- add "Expand ..." calc menu item to expand subset by edge attribute
+  Opens a singleton utility window (no G/S toggle, no freeze, not
+  duplicatable) to pick a _c/_a edge column, check its values, and expand
+  the current subset via edges matching those values (OR: any, AND: all).
+- show source/target node tooltips beside the edge tooltip
+  Hovering an edge now also shows mini tooltips for its source and target
+  nodes, positioned to the left and right of the edge tooltip respectively.
+  Both are clamped independently to the viewport (horizontally and
+  vertically) so they never go off screen - they may overlap the edge
+  tooltip or other UI in tight spaces instead, which is an acceptable
+  trade-off over disappearing off-screen.
+  - Extracted the existing node-tooltip content builder (title with
+    name/id, description, attributes) into buildNodeTooltipContent() so
+    it's shared between the main hover tooltip and these new mini
+    tooltips instead of duplicated.
+  - Added two new fixed-position elements (graph-tooltip-edge-source/
+    target), created alongside the existing one in initializeTooltip().
+  - Added hideAllTooltips() and used it at the two call sites in main.ts
+    that were hiding the main tooltip directly (bypassing clearHover),
+    so the new mini tooltips get hidden consistently everywhere.
+  Verified live: hovering an edge shows the correct source/target node
+  details on either side, clamps correctly at both screen edges, and
+  normal node/edge hover elsewhere is unaffected.
+- prefer name attribute as tooltip title, id smaller in brackets
+  The regular hover tooltip's title was always the node's id/label. If a
+  "name" attribute exists on the node, show that as the main title
+  instead, with the original id/label displayed smaller in parentheses
+  next to it (e.g. "L-Glutamate (715)"). Falls back to the existing
+  id-only title when no name attribute is present. Only affects the
+  plain hover tooltip - the Ctrl/UniProt-fetch and Shift/image tooltip
+  paths are untouched.
+- camera-following key light for consistent node facet contrast
+  Nodes were well-lit from one viewing angle but nearly invisible from
+  others, since the scene only had a single fixed-position directional
+  light. Since the graph is always centered at the world origin
+  (normalizeGraphPositions), a directional light whose position tracks
+  the camera each frame - aimed at the origin - acts as a "headlight"
+  that keeps the currently-visible facets lit no matter how you orbit.
+  Not physically correct, just fast and reliably high-contrast, which is
+  what was asked for. Bumped the ambient floor too so nothing goes fully
+  black. Verified live across multiple very different camera angles.
+
+### Fixes
+
+- resolve all eslint errors and warnings across src
+  Runs the full eslint config (typescript-eslint strict +
+  @stylistic formatting) clean: 3157 problems -> 0.
+  Includes the automated `eslint --fix` formatting pass plus manual
+  fixes for everything --fix can't do on its own:
+  - add explicit return types where the config requires them
+  - split multi-statement lines to satisfy max-statements-per-line
+  - brace lexical declarations inside switch cases
+  - remove genuinely dead code (unused imports/vars/functions),
+    verified with repo-wide grep before deleting anything
+  - drop a useless try/catch wrapper and an unused local variable
+    init where the value was always overwritten before being read
+  - attach `cause` to a re-thrown parse error instead of dropping
+    the original error
+  - exempt scripts/*.cjs from the require-imports rule (legitimate
+    CommonJS usage)
+  No behavior changes. typecheck and build verified clean before and
+  after (16 pre-existing, unrelated type errors are unchanged).
+- **dataset:** trim edges.tsv header and warn on column-count mismatch
+  edgesHeader was missing the .trim() that nodesHeader already had, so a
+  CRLF-terminated file corrupted the last header column's name. Row parsing
+  also silently tolerated a header/data column-count mismatch, which shifts
+  or drops attribute values with no indication why - now logs a warning
+  naming the affected row count and declared columns.
+- close hover dead-zone between icon-bar buttons and their dropdowns
+  The dropdown's margin-top left a thin gap that belonged to neither the
+  button's hover container nor the menu itself, so moving the pointer
+  through it slowly closed the menu before it reached an item. Drop the
+  margin so the menu sits flush against the button; its own top padding
+  still provides the visual gap while staying part of its hit area.
+- keep top-left icon bar dropdowns from pushing sibling buttons
+  The +/f dropdown menus were in normal flex flow, so an open menu
+  widened its column and shifted later toolbar buttons to the right.
+  Position the dropdowns absolutely so they overlay without affecting
+  the row layout.
+- gate edge source/target tooltips behind Shift, fix overlap on clamp
+  - The source/target mini tooltips shown when hovering an edge are now
+    opt-in via Shift, matching the existing Shift/Ctrl modifier pattern
+    for node tooltips. Default edge hover goes back to just the edge
+    tooltip. Also extended the live keydown/keyup tooltip refresh (which
+    previously only re-ran for node hover) to cover edge hover too, so
+    pressing/releasing Shift over a stationary edge toggles them live.
+  - Fixed the positioning: previously each of the three tooltips (edge,
+    source, target) clamped to the viewport independently, so clamping
+    one could push it into overlapping its neighbor (seen when hovering
+    near either screen edge). Now they're positioned as one rigid row
+    ([source] gap [edge] gap [target]) and the whole row shifts together
+    if it would go off screen, so the tooltips can never overlap each
+    other - only overlap other UI in the tightest spaces, which stays
+    preferable to going off screen.
+
+### Chores
+
+- add editorconfig, vscode eslint settings, and pre-commit hook
+  - .editorconfig: 2-space indent, LF, trim trailing whitespace,
+    final newline, matching the eslint stylistic config
+  - .vscode/settings.json: ESLint as default formatter + fix-on-save
+    (also picked up by Cursor)
+  - husky + lint-staged: pre-commit hook runs `eslint --fix` on
+    staged .ts/.js/.cjs files only, blocking the commit if errors
+    remain that can't be auto-fixed. Self-installs via the `prepare`
+    script on `npm install`, no manual git config step needed.
+  Nothing enforces this today (no CI, no hooks), which is how the
+  repo ended up with 3157 lint problems before this cleanup. This
+  closes that gap locally.
+- remove doom easter egg
+  Drop the hidden "= toomuch" subset-builder formula trigger, its window
+  registration, and the embedded WASM Doom port entirely:
+  - Delete src/windows/DoomWindow.ts and the public/doom/ static assets
+    (WASM binary, JS glue, WAD data).
+  - Remove the trigger check from main.ts's subset-formula handler and
+    collapse the now-pointless wrapper back to a direct call.
+  - Remove the DoomWindow import from WindowManager.ts and 'doom' from
+    the WindowType union in WindowIconBar.ts.
+  - Remove docs/windows/doom.md and its references in docs/architecture.md.
+
+## 0.3.0 (2026-09-25)
+
+16 commits.
+
+### Features
+
+- enlarge normalized graph scale to 300, exclude layout columns from attribute dropdowns
+  - Bump normalizeGraphPositions' target span from 50 to 300 units for
+    more breathing room between nodes; scale both scene variants' initial
+    camera distance by the same 6x factor so the default view stays
+    proportionate instead of starting deep inside the graph.
+  - Exclude x_/y_/z_ layout coordinate columns from the Node Size/Color/
+    Mesh and Edge Width/Color dropdowns entirely (via a shared
+    isLayoutCoordinateColumn helper) - they're position data for the
+    Layout dropdown, not meaningful attributes, and were cluttering the
+    list. Supersedes the previous x_default/y_default/z_default addition,
+    which the same reasoning now excludes too. The "Custom X/Y/Z column"
+    pickers are unaffected since they intentionally source layout columns
+    from a separate live-attribute-key path.
+- add subset-only 3D force layout mode (s key), fix default-layout dropdown gap
+  - Add s key: toggles a temporary d3-force-3d layout for just the currently
+    highlighted subset (induced edges only, isolated from the rest of the
+    graph), animated in place via the existing tween mechanism - no
+    persisted columns. Auto-restores on selection change or re-press;
+    Escape composes for free since it already clears the subset.
+  - Fix x_default/y_default/z_default missing from the Node Size/Color/Mesh
+    dropdowns: they're synthesized after the attribute-name registries are
+    built during parsing, so they never got registered even though every
+    other layout's x_/y_/z_ columns were.
+- add L/Shift+L shortcut to cycle node layout, fix focus & duplicate default layout
+  - Add l/Shift+L keyboard shortcut cycling forward/backward through the
+    same layout list as the GUI "Layout" dropdown.
+  - Fix getAvailableLayoutNamesFromAttributeKeys emitting a duplicate
+    "default" entry when a dataset already has x_default/y_default/z_default
+    columns, which made cycling bounce between Default and the first layout.
+  - Canvas had no tabindex attribute, so it was never a valid focus()
+    target and keyboard shortcuts required an initial click. Give it one,
+    focus it on load, and refocus it on canvas pointerdown.
+- add enrichment window for categorical/array column analysis
+  Fisher's exact/hypergeometric enrichment test (subset vs. full-dataset
+  background) for _c categorical and _a comma-separated array columns, with
+  BH-FDR correction, sortable table view, and an optional bar-chart view
+  (non-significant categories filtered out, full stats in tooltip). Also
+  fixes the info-dialog z-index in this window and KV Table so it can't end
+  up rendered behind other floating windows.
+- export full nodes.tsv
+- upload
+- cluster
+- **layoutcalc:** feature
+- **rwr:** better implementation
+- **aggregatednetwork:** two more options to calculate edge count
+- **aggregatednetwork:** min degree/edge width slider
+- (aggregated network) coocurrance vs edge based approach
+
+### Fixes
+
+- remove click-to-open-changelog from version label
+  Drop the click handler that opened the changelog window from the
+  bottom-right version label. Leaves the label's text, styling, and
+  tooltip untouched.
+- rescale explosion/relayout constants for the 300-unit normalized graph
+  The 50->300 normalization bump left several hardcoded absolute-unit radii
+  tuned to the old scale, so at 300 units nodes are now spread 6x farther
+  apart and nothing falls within them:
+  - q/w/e multi-explode was completely broken (createMultiExplosion
+    returned null) because NodeExplosion.ts's cluster/nearby-node detection
+    radii (0.5 / 2.0) never found any nodes at the new scale.
+  - x/y/c single-explode and the 'relayout' GUI sliders (altCRadius/
+    altCMovementScale) still "worked" but were proportionally negligible.
+  Scaled every one of these constants (and the GUI slider ranges) by the
+  same 6x factor as the normalization change, so their relative behavior
+  is unchanged, just correctly proportioned to the new coordinate scale.
+- no binning dist chart for categorical, added freeze button
+
+### Chores
+
+- stop tracking .DS_Store files
+  Add .DS_Store to .gitignore and untrack the two already-committed
+  instances (kept on disk, just removed from git).
+
+## 0.2.4 (2026-03-13)
+
+4 commits.
+
+### Features
+
+- aggregated network
+
+### Fixes
+
+- color palette reverse option, subset key instead keyvalue as default for kv columns
+- **presets:** only load and assign to proper dataset
+
+### CI
+
+- include changelog in release
+
+## 0.2.3 (2026-03-09)
+
+264 commits.
+
+### Changes
+
+- **subsetlist:** better logic for handling frozen state
+- ui(query/list) splitter resizing bit more sane, min width, icons, pubsub for library changes
+- **subsetlist:** splitter, css refine
+- **heatmap:** show original binning bounds, not log value, when log on
+- add other dataset
+- add windows state export and restore, z index fixes for tooltip and search, controls unfolded, chart white numbers instead black
+- uibar smaller
+- uibar smaller
+- Floating window improvements: header dropdown, editable title (subset table), icons
+- WebGPU: fix texture update, node material TSL/flows, stats overlay
+- Adopt latest Three.js BatchedMesh: core culling/raycast, minimal onBeforeRender
+  - Use core BatchedMesh for frustum culling and raycast (batchId); remove custom BVH, FrustumCulling, Raycasting, GetPositionAt, LOD
+  - Add OnBeforeRender that calls core onBeforeRender first then uniformsTexture.update for per-instance opacity
+  - Keep per-instance uniforms (opacity), createRadixSort, SquareDataTexture; remove bvh.js and three-mesh-bvh deps
+  - Update docs/3d.md; remove computeBVH from GraphSceneMeshes
+- upload relative paths support
+- lib2app refactor: restructure repo as standalone graph app
+  - Move examples/ to src/, graph.ts to main.ts
+  - Inline batched-mesh-extensions into src/batched/
+  - Remove docs/, graph-app/, demo HTML and extra Vite configs
+  - Single vite.config.ts, index.html, app-only package.json
+- more refactor
+- rm tmp files
+- remove dead code
+- refact00r0r0r0
+- refactor
+- Windows refactor: FloatingWindow, AppEvents, icon bar, pop-out windows (table/builder/dists/KV), SidePanelHandlers, color/mesh normalization
+- tsv tools
+- refactor windows
+- Support both raw numbers and letter+number in 3dhl column
+- no idea
+- 3d popup
+- 3D structure popup (p key), Alt tooltip removed, lower-right popup, auto-update on hover, node label, transparent bg
+- reduce deswcription tooltip cutoff
+- aattribute scaling
+- verify, no idea
+- no idea
+- clean up data git
+- report show
+- search stuff
+- search tool
+- removed animation between preset loads
+- tooltip stuff
+- tooltip uiux
+- (refactor): tooltip
+- (fix): iwas
+- (fix): verwaisteinit highlighted edge fix
+- (fix): edge lookup for hover
+- lil ui reorder
+- blavla
+- reset values of newly seleted attribute if they are null instead of keeping previous
+- bugfixes kv _a metric dist
+- hoverbox updates uiux
+- meshes
+- varun data
+- fix attribute detection with _norm postfix
+- edge transparency
+- q
+- per object culling very simple geo
+- sdfg
+- asf
+
+### Features
+
+- spectral embeddings for large graphs
+- create layout
+- new edge material
+- **edgehilight:** smarter and more control on how to highlight in settings window
+- **edgesubset:** highlighting edge subsets, configurable in settings window
+- **table:** allow as drag drop target, freeze when received drop
+- **rwr:** multi run by categorical
+- **upset:** parsing for kv improved
+- **rwr:** add top dataset
+- tags_a column that sync with subset library and can be acces everywhere, emit pubsub event on dataset metadata change
+- **subsetquery:** added library of subsets
+- **ui:** hide legacy windows and update titles
+- table 500 limit, subset list header row count
+- **upset:** dragdrop
+- add UpSet window with categorical/array/KV attribute, dark theme, G/S and freeze
+- lcc options, by k core, cc
+- rwr progress bar improvements, give ui thread time to redraw
+- **rwr:** progress bar refinement
+- doom rwr
+- median,  max degree for lcc
+- offset on duplicate
+- **barchart:** sort stacked bar charts by subvalue/name
+- keyvalue categorical creates stacked bars in global distribution chart
+- tooltip for geneid column if exists (override potential wroing id in lasbel/mainid)
+- **subsetbuilder:** ctrl + enter to run query
+- **query:** autorun option for config
+- scatter size aggegrate, node attribute integrated into pubsub bus
+- rectangular selection for scatter chart and drag drop source ability
+- loading bar
+- subset list, drop targets more fields
+- nodeset dragdrop support for heatmap (src) and subsetlist (target)
+- add all kinds of force layout parameters to meta multi network
+- multi meta network
+- scatter window
+- network meta window
+- helper util to delete unwanted layouts
+- ensure windows are inside browser windw when creating from config.json
+- heatmap cut to top 50 elements if more
+- allow ?dataset=asdf or /dataset uri
+- heatmap num items limit
+- store/layout in config
+- heatmap diagonalbar grey
+- heatmap
+- kv split toggle for distributions
+- new global distribution chart that aggregates a and uses same logic as subset distribution
+- subset network changes, upload script multiple datasets, revert color palette
+- calcs, expand subset
+- new network window
+- llm stuff markdown, table dist changes for binning
+- **ui:** collapse window to bottom edge if snapped there already
+- subset query allow unicode chars
+- library query, drag drop nodes to 3d explorere
+- duplicate windows, subset query library
+- **ui:** windows snap to each other and edges
+- window icons
+- webgpu bloom
+- webgpu working, indicator emoji, forcewebgl uri support
+- pulse active node
+- lasso, interact modes, uibar
+- user modes, interact select
+- global color per column refined
+- barchart improvements
+- **table:** sticky header, sticky content on high rows
+- colors for table categoriesd _a _kv etc
+- inlineview for table
+- better table with tooltip
+- simplify to common material that supports opacity + glow
+- bloom highlighted, fade others
+- highligh nodes toggle, usegeneid if exists for molecular viewer
+- extract keys from _c_kv and create extra categorival items in cat dropdowns like color etc
+- has/substr feature for querly language
+- 3d popup
+- binning on off toglgle in distribution chart
+- clickable nodes in table
+- 3d viewer, sidebar list labels molecule elements
+- highlights from column for 3d viewer
+- highligh on hover in 3dmol viewer
+- 3rd ctrl tooltip
+- ctrl 3rd tooltip
+- fog
+- focus mode
+- relayout increment factor
+- relayout
+- upload script
+- delete browserstorage
+- tooltip switching
+- secondary tooltip
+- esc to clear subset
+- explosion forced subset
+- alt qwe with different movement scales
+- multiexplosion
+- explosion + halfexplosion + reset fix with alt xyr
+- explosion
+- kv
+- temporary tsv values
+- animation
+- **:** layouts
+- **socialnotebook:** categorical parsing for edge attributes
+- network dist details
+- lol hardcoded terms
+- preset json
+- excel copy paste
+- styling
+- dist table for subset cols
+- small stuff i think
+- query engine
+- add whole cluster
+- side panel details
+- side panel details
+- side panel
+- subset panel
+- subset panel
+- subset highlighting
+- multiple meshes and mesh select by attributer
+- load/save settings
+
+### Fixes
+
+- **distributionwindow:** hover tooltip out of window when at top edgeg, rwr warn if overwriting old results
+- **subsetlibrary:** on delete also delete from subset temp column and emit column data changed event; handle column data changed in upset window
+- **subsetlistwindow:** handle resizig window and splitter better
+- **distributionswdw:** drag drop for non stacked
+- **windows:** click brings to top
+- **upset:** pre check len and clip attributes
+- **ui-bar:** move easteregg away
+- **cicd:** vite config for coep headers etc
+- rwr speedup
+- heatmap close bug, observer; log default of for checkbox
+- **datasetloader:** strip newline of last tsv header
+- dont show coordinate columns in subset table
+- annotation node opacity
+- **multimetanetwork:** fixed some, introduced new bugs probably, removed 4x save img temporarily
+- **docs:** refine wording
+- **cicd:** errors in dev env
+- normalization order, reduced multiple normalizations
+- race condition normalization mesh rebuild, hacky ensureNormalizationsBeforeRebuild() added
+- freehand select reduce z-index to go behind lilgui
+- create windows after node data is built
+- proper clone windows
+- switched vite to mpa, so 404 dont load default app and trigger multiple function calls
+- temporarily removing show labels
+- clear subset, close windows when switching dataset
+- limit presets to dataset when populating preset dropdown
+- refine preset loading, presets per layout, get rid of presets.json and use config.json
+- get rid of data in preset
+- no subset changes in search enter
+- small stuff
+- default values lilgui
+- settings button in ui also open settings wdw when closed with x
+- relative paths for prod builds
+- depth stuff
+- texture memory leak
+- zlayering
+- lasso ui bar fixes
+- lint errs
+- highlight edges
+- no grey in catagorical colors
+- depth write for highlighted nodes
+- edge color gets recalculated and gets darker and darker
+- reapply highlighting when mesh rebuilt by changing attribute dropdowns
+- highlights
+- highlights
+- tooltip ctrl cleanup
+- tooltip refinements
+- 3rd tooltip refinement
+- fog settings
+- arrow keys removed
+- explosion + highlighted
+- autoload preset constrained to current dataset
+- stuff
+- selection hilight management
+- side panel dfixes
+- node selection bugfix (index over multiple meshes)
+
+### Performance
+
+- reduced to 3 meshes
+- configurable depth sort, selective bloom, and sort removal
+  Disable radix sort by default (configurable via Depth Sort toggle) to eliminate per-frame sorting overhead. Add bloom mode setting (always / selection / off) that bypasses the EffectComposer entirely when bloom is not needed, routing renders through the direct renderer.render() path for significantly lower frame times during idle viewing.
+
+### Refactoring
+
+- renderer out
+- whatever
+- more stuff
+- attribute resolvers, kv parsing, meshes, chart, presets
+- windows in own files
+- removed sidebar
+- highlight settings from sidebar to own section in settings window
+- **windows:** a lot
+- windows
+- keyboard shortcuts
+
+### Documentation
+
+- **layoutcalc:** added docs to docs/
+- readme added
+- node edge appearabce e2d
+- architecture overview
+- possible metrics
+- ideas for 3rd party library adoption
+- pubsub refactor plan
+- hints in menu
+
+### CI
+
+- cleanup
+- no push
+- finally
+- debug output what normalization actually does (what columns) and timing
+
+### Chores
+
+- **layoutcalc:** direct float array to umap, reduce mem problems
+- **edgesubsets:** include only edges that have both nodes in current subset
+- update CHANGELOG
+- **data:** bulk add array elements to column
+- **rwr:** add kv column
+- **rwr:** emit dataset metadata change when adding temporary columns
+- **temporarycolumns:** changed column name from tags_a to subsets_a
+- **upset:** improve ui etc
+- streamline subset global toggle to header bar, get rid of old windows
+- strings refined
+- refactor preset/config stuff into own module
+- centralize stuff in window manager
+- refactor legacy popup windows into windows system
+- console cleanup, remove auto init preset
+- update modules
+- delete unused and cleanup
+- rm deadcode, no rebuild meshes for highlights
