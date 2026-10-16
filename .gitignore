@@ -1,0 +1,3 @@
+# Deployments keep their own data here; this repository ships only the app.
+data/
+.DS_Store
