@@ -20,16 +20,18 @@ key). Voice input (push-to-talk) is optional and needs whisper.cpp.
    https://github.com/menchelab/asdf10k-agentic-backend#quick-start . Check
    `curl http://127.0.0.1:8787/api/health` answers `"ok": true`. For a first test without Claude
    access: `AGENT_FAKE=1 npm start` (a scripted agent).
-2. **Tell the app where it is** - one of:
-   - same machine, app served over plain HTTP (e.g. `python3 server.py`): add to the dataset's
-     `data/<folder>/config.json`
-     ```json
-     "agentBackendUrl": "http://127.0.0.1:8787/api"
-     ```
-     (the URL ends with `/api`; every dataset that should have the agent needs the key);
+2. **Let the app reach it** - the app calls `/agent-api` on its own origin by default, so the
+   deployment's web server forwards that path to the backend:
+   - local / same machine: `python3 server.py` in the deployment folder does this already (it
+     forwards `/agent-api/` to `http://127.0.0.1:8787/api`; `--backend <url>` for another address).
+     No config change. Check `curl http://127.0.0.1:8887/agent-api/health`;
    - a deployment behind a web server (HTTPS, shared): reverse-proxy the path `/agent-api/` of the
      deployment to `http://127.0.0.1:8787/api/` (nginx / Caddy snippets in the backend README,
-     section "Connecting the app"); no config key needed, the app uses `/agent-api` by default.
+     section "Connecting the app"). No config key needed.
+   - `agentBackendUrl` in a dataset's `config.json` overrides the default with an absolute URL. Use
+     it only when the proxy is not possible; it is per dataset, and an HTTPS site cannot call an
+     `http://` URL, so do not commit a local `http://127.0.0.1` URL to a deployment that is also
+     served publicly.
 3. **Check in the browser** - load the dataset, open "+" › BigBrainz20k. A green dot next to the
    session list = connected; a red banner "Backend not reachable at <url>" names the URL it tried. Send
    "hi": an answer within a few seconds means Claude access works too. A microphone button next to
@@ -39,10 +41,12 @@ key). Voice input (push-to-talk) is optional and needs whisper.cpp.
 
 - **HTTPS deployments need an HTTPS backend.** A page served over HTTPS (any public site; a headset
   that opens the deployment by its network address rather than `localhost`) cannot call
-  `http://...`; use the reverse proxy. Plain-HTTP setups (local testing)
-  can use the absolute URL.
+  `http://...`; the `/agent-api/` proxy avoids this, since the browser only talks to the page's own
+  origin.
+- **Environment names:** the backend reads `AGENT_PORT` / `AGENT_HOST`, not `PORT` / `HOST` (conda
+  and many shells set those for other purposes).
 - **No authentication.** The backend listens on `127.0.0.1` by default. Do not open it to a network
-  (`HOST=0.0.0.0`) unless that network is trusted; whoever reaches it can run agent sessions on the
+  (`AGENT_HOST=0.0.0.0`) unless that network is trusted; whoever reaches it can run agent sessions on the
   backend machine with its Claude account.
 - **One backend per lab is enough.** Sessions are per dataset; several deployments can share one
   backend if they reach it.
@@ -58,7 +62,8 @@ If you are an AI agent asked to "set up the agent" for a user's deployment:
 2. Clone and start the backend as in its README (do not run it as root). If the user has no Claude
    Code login on that machine, ask them to run `claude` once and log in, or to provide an
    `ANTHROPIC_API_KEY` - never invent or reuse credentials.
-3. Wire it up (step 2 above): `agentBackendUrl` in each dataset's `config.json` for local setups,
-   or the reverse-proxy location for served deployments.
+3. Wire it up (step 2 above): for local setups just run the deployment's `server.py` (no data
+   changes); for served deployments add the reverse-proxy location. Do not add `agentBackendUrl`
+   to the datasets unless the proxy is impossible.
 4. Verify as in step 3, and report the URL and how to restart the backend (the README's "Running it
    permanently" section for a server).

@@ -5,7 +5,7 @@ interactive 3D view of biological networks (proteins, transcripts, metabolites a
 interactions) in the browser and in VR / AR headsets (Meta Quest 3). It contains no data: you add
 your own datasets in a `data/` folder next to the app and serve everything as static files.
 
-Version: **0.8.0** (2026-10-16, build 5302290). Changes: [CHANGELOG.md](CHANGELOG.md).
+Version: **0.8.1** (2026-10-16, build 5bd1334). Changes: [CHANGELOG.md](CHANGELOG.md).
 
 ## For AI agents
 
@@ -48,9 +48,14 @@ EOF
 python3 server.py          # http://127.0.0.1:8887/
 ```
 
-Any static web server works (nginx, GitHub Pages, `npx serve`); `server.py` only fixes the
-JavaScript MIME type that some Windows Python installations get wrong. WebXR needs HTTPS (or
-`localhost`), so serve deployments for headsets over HTTPS.
+`server.py` (Python standard library only, no install) serves this folder on `127.0.0.1:8887`
+and forwards `/agent-api/` to the BigBrainz20k agent backend at `http://127.0.0.1:8787/api` when
+one runs there, exactly like a production web server is set up, so the same `config.json` works
+locally and live. Options: `--port`, `--host 0.0.0.0` (other machines; no authentication),
+`--backend <url ending in /api>`; `python3 server.py --help`. Any other static web server works too
+(nginx, GitHub Pages, `npx serve`); it then needs the `/agent-api/` proxy for the agent window
+(docs/for_agents/agent-backend.md). WebXR needs HTTPS (or `localhost`), so serve deployments for
+headsets over HTTPS.
 
 Layout of a deployment:
 
