@@ -28,10 +28,12 @@ key). Voice input (push-to-talk) is optional and needs whisper.cpp.
    - a deployment behind a web server (HTTPS, shared): reverse-proxy the path `/agent-api/` of the
      deployment to `http://127.0.0.1:8787/api/` (nginx / Caddy snippets in the backend README,
      section "Connecting the app"). No config key needed.
-   - `agentBackendUrl` in a dataset's `config.json` overrides the default with an absolute URL. Use
-     it only when the proxy is not possible; it is per dataset, and an HTTPS site cannot call an
-     `http://` URL, so do not commit a local `http://127.0.0.1` URL to a deployment that is also
-     served publicly.
+   - when the proxy is not possible, give the backend's absolute URL (ending in `/api`) once for the
+     whole deployment in `data/index.json`: `"services": { "agent": { "url": "https://agent.example.org/api" } }`
+     ([data-folder-setup.md](data-folder-setup.md), section 1). `agentBackendUrl` in a dataset's
+     `config.json` still overrides it for that one dataset. An HTTPS site cannot call an `http://`
+     URL, so do not put a local `http://127.0.0.1` URL into a deployment that is also served
+     publicly.
 3. **Check in the browser** - load the dataset, open "+" › BigBrainz20k. A green dot next to the
    session list = connected; a red banner "Backend not reachable at <url>" names the URL it tried. Send
    "hi": an answer within a few seconds means Claude access works too. A microphone button next to
@@ -63,7 +65,7 @@ If you are an AI agent asked to "set up the agent" for a user's deployment:
    Code login on that machine, ask them to run `claude` once and log in, or to provide an
    `ANTHROPIC_API_KEY` - never invent or reuse credentials.
 3. Wire it up (step 2 above): for local setups just run the deployment's `server.py` (no data
-   changes); for served deployments add the reverse-proxy location. Do not add `agentBackendUrl`
-   to the datasets unless the proxy is impossible.
+   changes); for served deployments add the reverse-proxy location. Only if the proxy is impossible, set
+   `services.agent.url` in `data/index.json` (not `agentBackendUrl` in every dataset).
 4. Verify as in step 3, and report the URL and how to restart the backend (the README's "Running it
    permanently" section for a server).

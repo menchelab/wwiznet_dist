@@ -5,14 +5,14 @@ interactive 3D view of biological networks (proteins, transcripts, metabolites a
 interactions) in the browser and in VR / AR headsets (Meta Quest 3). It contains no data: you add
 your own datasets in a `data/` folder next to the app and serve everything as static files.
 
-Version: **0.9.0** (2026-10-17, build 7fbcfc3). Changes: [CHANGELOG.md](CHANGELOG.md).
+Version: **0.10.0** (2026-10-18, build 5f245f5). Changes: [CHANGELOG.md](CHANGELOG.md).
 
 ## For AI agents
 
 If a user asked you to set this up with their data, you can do everything from this repository:
 
 1. Read **[docs/for_agents/data-folder-setup.md](docs/for_agents/data-folder-setup.md)** - the
-   complete guide: `data/datasets.json`, the formats of `nodes.tsv` and `edges.tsv` (column-kind
+   complete guide: `data/index.json`, the formats of `nodes.tsv` and `edges.tsv` (column-kind
    suffixes), and `config.json` with every key, built-in defaults and how to choose good ones.
 2. If you can drive a browser, read **[docs/for_agents/visual-tuning.md](docs/for_agents/visual-tuning.md)**:
    tune colours, sizes, edges and layout in the running app through its `window.asdf10k` command
@@ -22,7 +22,7 @@ If a user asked you to set this up with their data, you can do everything from t
    **[docs/for_agents/agent-backend.md](docs/for_agents/agent-backend.md)** to connect the
    BigBrainz20k AI agent window to its backend ([menchelab/asdf10k-agentic-backend](https://github.com/menchelab/asdf10k-agentic-backend)).
 4. Get the app files (step "Set up a deployment" below), convert the user's data into
-   `data/<folder>/nodes.tsv` and `edges.tsv`, write `data/datasets.json` and a first `config.json`,
+   `data/<folder>/nodes.tsv` and `edges.tsv`, write `data/index.json` and a first `config.json`,
    start `python3 server.py`, check the dataset loads (the browser console lists problems), then
    tune the view (step 2).
 
@@ -39,8 +39,8 @@ rm -rf .git        # optional: start your own repository for the deployment
 # 2. your data
 mkdir -p data/mydata
 #    put nodes.tsv and edges.tsv into data/mydata/ (formats: docs/for_agents/data-folder-setup.md)
-cat > data/datasets.json <<'EOF'
-{ "version": 1, "default": "mydata",
+cat > data/index.json <<'EOF'
+{ "version": 2, "default": "mydata",
   "datasets": [ { "key": "mydata", "folder": "mydata", "label": "My network" } ] }
 EOF
 
@@ -64,7 +64,7 @@ index.html, assets/, fonts/     # the app (replaced by updates)
 docs/for_agents/                # guides (replaced by updates)
 VERSION.json, update.sh, server.py
 data/                           # YOUR data - never touched by updates
-  datasets.json
+  index.json                    # datasets + services (old name: datasets.json)
   <folder>/nodes.tsv, edges.tsv, config.json, custom_windows/
 ```
 

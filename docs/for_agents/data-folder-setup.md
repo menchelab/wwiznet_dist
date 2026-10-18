@@ -19,7 +19,7 @@ comes from plain files in `dist/data/`.
 dist/
   index.html, assets/ ...         # the app - do not touch
   data/
-    datasets.json                 # REQUIRED: the list of datasets
+    index.json                    # REQUIRED: the list of datasets (old name: datasets.json)
     <folder>/                     # one folder per dataset (subfolders allowed)
       nodes.tsv                   # REQUIRED
       edges.tsv                   # REQUIRED
@@ -30,16 +30,17 @@ dist/
 
 The app is served as static files (any web server, `npx serve dist`, nginx, ...). Open
 `http://host/?dataset=<key>` to load a dataset; without the parameter the `default` from
-`datasets.json` loads. Changes to `data/` are picked up on the next page reload, no rebuild.
+`index.json` loads. Changes to `data/` are picked up on the next page reload, no rebuild.
 
-## 1. `data/datasets.json`
+## 1. `data/index.json`
 
-Lists every dataset. Without it (or with an invalid file) the app shows "No datasets configured"
-and loads nothing.
+Lists every dataset, and optionally where this deployment's services are. Without it (or with an
+invalid file) the app shows "No datasets configured" and loads nothing. Its former name
+`data/datasets.json` (`"version": 1`, no `services`) is still read when there is no `index.json`.
 
 ```json
 {
-  "version": 1,
+  "version": 2,
   "default": "cml",
   "datasets": [
     { "key": "cml", "folder": "cml", "label": "CML interactome" },
@@ -51,7 +52,8 @@ and loads nothing.
 
 | Field | Rules |
 |---|---|
-| `version` | always `1` |
+| `version` | `2` (`1` for the old `datasets.json` without `services`) |
+| `services` | optional. `collab`: `{ "url": "https://collab.example.org/api", "token": "..." }` - the multiplayer session relay (asdf10k-collab-backend) and its shared token; without it the app expects the relay at `/sync-api` on its own origin. `agent`: `{ "url": "..." }` - the agent backend, default `/agent-api` |
 | `default` | key loaded when the URL has no `?dataset=`; optional, default = first non-hidden entry |
 | `key` | lowercase letters, digits, `_`, `-`; starts with a letter or digit; unique. It is the dataset's identity (URL, saved settings) - do not rename it later, or add the old key to `aliases` |
 | `folder` | path below `data/`, subfolders allowed (`projects/cml/v2`), no leading `/`, no `..` |
@@ -150,7 +152,7 @@ should ship a config.json** - at least a layout and a preset.
 |---|---|---|
 | `version` | `1` | **required** |
 | `exportType` | `"asdf10k-local-storage"` | **required** |
-| `dataset` | string | the dataset key from datasets.json; informational (the folder decides); an old key listed in `aliases` is accepted |
+| `dataset` | string | the dataset key from index.json; informational (the folder decides); an old key listed in `aliases` is accepted |
 | `nodeLayout` | string | layout at start: `default` (the `x`/`y`/`z` columns), a `<name>` from `x_<name>` columns, or `__CUSTOM__` together with `customLayoutColumns` |
 | `customLayoutColumns` | `{ "x": col, "y": col, "z": col }` | three numeric node columns used as positions when `nodeLayout` is `__CUSTOM__` |
 | `presets` | `{ "<name>": { preset } }` | named view settings (4.3); merged into the user's presets for this dataset |
@@ -167,7 +169,7 @@ should ship a config.json** - at least a layout and a preset.
 | `ar` | `{ "showBoxLines": bool }` | AR placement box wireframe on the Quest (default `true`) |
 | `xrTooltipMaxDistanceMeters`, `xrToggleMaxDistanceMeters` | number (metres) | reach of the VR / AR laser for tooltips and for selecting nodes (about 1) |
 | `metadataCache` | `{ "enabled": true }` | tooltip data from a prebuilt `cache/` folder (built with a developer tool); leave it out unless that folder exists |
-| `agentBackendUrl` | URL | the AI agent backend's base URL ending in `/api` (e.g. `http://127.0.0.1:8787/api`). Usually leave it out: the app uses `/agent-api` on its own origin, which the shipped `server.py` and a production web server forward to the backend. Setup: [agent-backend.md](agent-backend.md) |
+| `agentBackendUrl` | URL | the AI agent backend's base URL ending in `/api` (e.g. `http://127.0.0.1:8787/api`). Usually leave it out: the app uses `services.agent.url` from `data/index.json`, else `/agent-api` on its own origin, which the shipped `server.py` and a production web server forward to the backend. Only for a dataset that needs a different backend. Setup: [agent-backend.md](agent-backend.md) |
 | `localStorage` | object | raw browser-storage snapshot written by Export (window positions, table settings). Do not write it by hand; remove it from exported files unless you want exactly those positions |
 
 Top-level `cameraPosition` / `cameraRotation` in exported files are not read; the camera belongs to
@@ -389,7 +391,7 @@ exporting the verified result as `config.json`.
 
 ## 5. Checklist
 
-1. `data/datasets.json` exists, is valid JSON, and lists the dataset with a unique `key` and the
+1. `data/index.json` (or the old `data/datasets.json`) exists, is valid JSON, and lists the dataset with a unique `key` and the
    right `folder`.
 2. `nodes.tsv` has `id` as the first column, unique ids, tab separators, a header row.
 3. Every column has the right suffix for its kind; list items are comma-separated and contain no

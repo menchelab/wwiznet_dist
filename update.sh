@@ -39,4 +39,4 @@ cp "$SRC/update.sh" ./update.sh.new && chmod +x ./update.sh.new && mv ./update.s
 
 NEW=$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' VERSION.json | head -1)
 echo "Updated wwiznet: $OLD -> $NEW"
-[[ -f data/datasets.json ]] || echo "Note: data/datasets.json is missing - see docs/for_agents/data-folder-setup.md"
+[[ -f data/index.json || -f data/datasets.json ]] || echo "Note: data/index.json is missing - see docs/for_agents/data-folder-setup.md"
