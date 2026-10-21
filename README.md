@@ -5,7 +5,7 @@ interactive 3D view of biological networks (proteins, transcripts, metabolites a
 interactions) in the browser and in VR / AR headsets (Meta Quest 3). It contains no data: you add
 your own datasets in a `data/` folder next to the app and serve everything as static files.
 
-Version: **0.10.1** (2026-10-21, build 6e896c5). Changes: [CHANGELOG.md](CHANGELOG.md).
+Version: **0.10.2** (2026-10-21, build 7da0a16). Changes: [CHANGELOG.md](CHANGELOG.md).
 
 ## For AI agents
 

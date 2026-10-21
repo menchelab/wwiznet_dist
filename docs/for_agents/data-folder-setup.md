@@ -25,6 +25,7 @@ dist/
       edges.tsv                   # REQUIRED
       config.json                 # optional: initial view, presets, windows, tooltips ...
       custom_windows/             # optional: interactive markdown windows (see the other guide)
+      data_description.txt        # optional: what the dataset is, for the agent (section 4b)
       cache/                      # optional: offline metadata cache (built with a dev tool, skip it)
 ```
 
@@ -388,6 +389,15 @@ exporting the verified result as `config.json`.
   "sliderRanges": { "nodeSizeScaling": { "min": 2, "max": 8, "step": 0.01 } }
 }
 ```
+
+## 4b. `data_description.txt` (optional, for the agent)
+
+Plain text in the dataset folder that the BigBrainz20k agent gets in its **system prompt** for
+every session on this dataset: what the network is, where it comes from (and how to cite it), how
+it was built, what the important columns mean, who the users are and how to talk to them. Write it
+for the agent, not for people: facts and rules, no layout. Keep it under ~20 KB (it costs prompt
+space in every session). The app reads the file once per page load and sends it when it changed;
+an edited file takes effect after a page reload, in running sessions at the next message.
 
 ## 5. Checklist
 
