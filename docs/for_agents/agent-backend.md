@@ -39,6 +39,27 @@ key). Voice input (push-to-talk) is optional and needs whisper.cpp.
    "hi": an answer within a few seconds means Claude access works too. A microphone button next to
    Send appears when voice input is set up.
 
+## Laptop backend for headsets
+
+Headsets open the HTTPS deployment; one laptop on the same network runs the backend.
+
+1. Laptop: `AGENT_HOST=0.0.0.0 npm start` in the backend folder. Give the laptop a fixed address
+   (DHCP reservation, or your own travel router: venue Wi-Fi often blocks traffic between devices).
+2. Each headset, once: open `chrome://flags/#unsafely-treat-insecure-origin-as-secure`, enter the
+   laptop's origin (e.g. `http://192.168.1.50:8787`), enable, relaunch the browser. The browser then
+   lets the HTTPS page call that `http://` origin. Allow local network access if the browser asks.
+3. Open the deployment with `?agent=http://192.168.1.50:8787/api` (base URL including `/api`).
+
+The backend prints these links when it starts (`AGENT_APP_URL=<app URL>` makes them full links).
+With Claude Code in the backend folder, "start the backend for https://your-app" runs its
+`start-backend` skill: it starts the server and explains the links and the browser flag.
+
+In a multiplayer session the driver's Agent window shares its session live ("Share live"): the
+other clients open it read-only, each reading the backend directly - so every viewer needs step 2
+and an `?agent=` URL too.
+
+Anyone on that network can use the backend (no authentication): only on a network you trust.
+
 ## Rules
 
 - **HTTPS deployments need an HTTPS backend.** A page served over HTTPS (any public site; a headset
