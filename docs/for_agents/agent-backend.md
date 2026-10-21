@@ -41,21 +41,35 @@ key). Voice input (push-to-talk) is optional and needs whisper.cpp.
 
 ## Laptop backend for headsets
 
-Headsets open the HTTPS deployment; one laptop on the same network runs the backend.
+Headsets open the HTTPS deployment; one laptop on the same network runs the backend. An HTTPS
+page may not call `http://<laptop-ip>`, so the laptop serves HTTPS itself with a certificate from
+[mkcert](https://github.com/FiloSottile/mkcert).
+Needs backend v0.3.1 or later (`npm run cert`, the HTTPS port and the CORS fix for the gzip graph
+upload); with v0.3.0 use the flag route at the end of this section.
 
-1. Laptop: `AGENT_HOST=0.0.0.0 npm start` in the backend folder. Give the laptop a fixed address
-   (DHCP reservation, or your own travel router: venue Wi-Fi often blocks traffic between devices).
-2. Each headset, once: open `chrome://flags/#unsafely-treat-insecure-origin-as-secure`, enter the
-   laptop's origin (e.g. `http://192.168.1.50:8787`), enable, relaunch the browser. The browser then
-   lets the HTTPS page call that `http://` origin. Allow local network access if the browser asks.
-3. Open the deployment with `?agent=http://192.168.1.50:8787/api` (base URL including `/api`).
+1. Laptop, once per network: `npm run cert` in the backend folder (`brew install mkcert` first on
+   macOS; it may ask for the password once to trust mkcert's CA on the laptop). The certificate
+   names localhost, the laptop's name and its current LAN addresses (git-ignored `certs/`).
+2. Laptop: `AGENT_HOST=0.0.0.0 npm start`. HTTP stays on 8787 (Vite proxy, localhost), HTTPS runs on
+   8788. Give the laptop a fixed address (DHCP reservation, or your own travel router: venue Wi-Fi
+   often blocks traffic between devices). A new address: the start-up log warns - run `npm run cert`
+   again and restart.
+3. Each headset, once: open `https://192.168.1.50:8788/api/health` in Quest Browser; it warns that
+   the certificate is not trusted (it is mkcert's, trusted on the laptop only): **Advanced ->
+   Proceed**, JSON appears. Allow local network access if the browser asks. The browser keeps this
+   exception for a while; when the Agent window later says "not reachable", open the link again.
+4. Open the deployment with `?agent=https://192.168.1.50:8788/api` (base URL including `/api`).
 
 The backend prints these links when it starts (`AGENT_APP_URL=<app URL>` makes them full links).
 With Claude Code in the backend folder, "start the backend for https://your-app" runs its
-`start-backend` skill: it starts the server and explains the links and the browser flag.
+`start-backend` skill: it starts the server and explains the links and the certificate step.
+
+Without mkcert: `?agent=http://192.168.1.50:8787/api`, and on each headset once
+`chrome://flags/#unsafely-treat-insecure-origin-as-secure` -> `http://192.168.1.50:8787`, enable,
+relaunch (the browser then lets the HTTPS page call that `http://` origin).
 
 In a multiplayer session the driver's Agent window shares its session live ("Share live"): the
-other clients open it read-only, each reading the backend directly - so every viewer needs step 2
+other clients open it read-only, each reading the backend directly - so every viewer needs step 3
 and an `?agent=` URL too.
 
 Anyone on that network can use the backend (no authentication): only on a network you trust.
