@@ -44,8 +44,8 @@ key). Voice input (push-to-talk) is optional and needs whisper.cpp.
 Headsets open the HTTPS deployment; one laptop on the same network runs the backend. An HTTPS
 page may not call `http://<laptop-ip>`, so the laptop serves HTTPS itself with a certificate from
 [mkcert](https://github.com/FiloSottile/mkcert).
-Needs backend v0.3.1 or later (`npm run cert`, the HTTPS port and the CORS fix for the gzip graph
-upload); with v0.3.0 use the flag route at the end of this section.
+Needs backend v0.4.0 or later (`npm run cert`, the HTTPS port and the CORS fix for the gzip graph
+upload); with an older backend use the flag route at the end of this section.
 
 1. Laptop, once per network: `npm run cert` in the backend folder (`brew install mkcert` first on
    macOS; it may ask for the password once to trust mkcert's CA on the laptop). The certificate
@@ -54,11 +54,22 @@ upload); with v0.3.0 use the flag route at the end of this section.
    8788. Give the laptop a fixed address (DHCP reservation, or your own travel router: venue Wi-Fi
    often blocks traffic between devices). A new address: the start-up log warns - run `npm run cert`
    again and restart.
-3. Each headset, once: open `https://192.168.1.50:8788/api/health` in Quest Browser; it warns that
-   the certificate is not trusted (it is mkcert's, trusted on the laptop only): **Advanced ->
-   Proceed**, JSON appears. Allow local network access if the browser asks. The browser keeps this
-   exception for a while; when the Agent window later says "not reachable", open the link again.
-4. Open the deployment with `?agent=https://192.168.1.50:8788/api` (base URL including `/api`).
+3. Each device: open the Agent window. Its backend strip at the top is unfolded while the backend
+   cannot be reached: type the laptop's address (`192.168.1.50` is enough: the app fills in
+   `https://`, port 8788 and `/api` and shows the result) and press **Connect**, or pick a
+   suggestion. Once per device the browser has to accept the laptop's certificate (it is
+   mkcert's, trusted on the laptop only): the strip says "Certificate not accepted yet" and offers
+   **Open 192.168.1.50:8788 to accept its certificate**; that page warns, choose **Advanced ->
+   Proceed**, come back, and the window connects by itself. Allow local network access if the
+   browser asks. The choice is kept on that device (not in config.json); **Reset to default**
+   goes back to the deployment's backend. The browser keeps the certificate exception for a while;
+   when the strip later says "Certificate not accepted yet", accept it again.
+4. Or link it: `?agent=https://192.168.1.50:8788/api` (base URL including `/api`) uses that backend for
+   that page load, without typing.
+
+A deployment that always uses a laptop on the local network can name it as the default:
+`services.agent.url` in `data/index.json` ([data-folder-setup.md](data-folder-setup.md)); the strip
+then shows it as "Default".
 
 The backend prints these links when it starts (`AGENT_APP_URL=<app URL>` makes them full links).
 With Claude Code in the backend folder, "start the backend for https://your-app" runs its
@@ -69,8 +80,12 @@ Without mkcert: `?agent=http://192.168.1.50:8787/api`, and on each headset once
 relaunch (the browser then lets the HTTPS page call that `http://` origin).
 
 In a multiplayer session the driver's Agent window shares its session live ("Share live"): the
-other clients open it read-only, each reading the backend directly - so every viewer needs step 3
-and an `?agent=` URL too.
+other clients open it read-only, each reading the backend directly - so every viewer needs the
+certificate step too. A member connected to a non-default backend offers it to the others: their
+backend strip shows "<name> uses backend 192.168.1.50:8788 · Use it" (one click connects, after the
+same certificate step). Nobody is switched without that click: the backend sees their graph data and
+chat. A driver on a `localhost` backend sees "⚠ others cannot reach it" next to the toggle (it is not
+offered); a viewer whose backend lacks the driver's session says so in its banner.
 
 Anyone on that network can use the backend (no authentication): only on a network you trust.
 

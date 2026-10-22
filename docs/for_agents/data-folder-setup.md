@@ -73,7 +73,7 @@ Tab-separated, UTF-8, one header row, one row per node.
 | `x_<name>`, `y_<name>`, `z_<name>` | optional | additional layouts; `<name>` is the layout name in the app (e.g. `x_fa2_2` ... -> layout `fa2_2`). For a 2D layout write `z_<name>` = 0 |
 | `color` | optional | `#rrggbb` base colour of the node ("original" colouring) |
 | `name` | recommended | display name (gene symbol, metabolite name); may repeat |
-| any other column | optional | a node attribute; its **suffix decides its kind** (table below) |
+| any other column | optional | a node attribute; its **suffix decides its kind** (table below). The names `uniform`, `original` and `none` are the built-in choices of the size / colour / width / cut-off / alpha dropdowns: a column with such a name is read as `uniform_col` etc. |
 
 Positions may use any scale: the app normalises them. Empty cells are allowed and mean "no value".
 
@@ -88,6 +88,14 @@ Positions may use any scale: the app normalises them. Empty cells are allowed an
 | `_kv` | key:value pairs, comma-separated | `liver:2.1,kidney:0.4` | distributions, key:value table (e.g. expression per tissue) |
 | `_c_kv` | category key:value pairs | `CML:up,AML:down` | like `_kv` with category values |
 | no suffix | text | free text | tables and tooltips only |
+
+How cells are read (since 2026-10-19): `_n`, `_norm` and columns without a suffix become numbers when
+the text is one; `_c`, `_a`, `_kv` and `_c_kv` keep the text exactly (a category `007` stays `007`, not
+the number 7). Empty and whitespace-only cells are "no value" (not 0). A blank line or an empty first or last cell no longer shifts anything. Columns starting with `x_`,
+`y_` or `z_` are layout coordinates only without a kind suffix (`x_count_n` is a normal attribute).
+**Migration note:** before 2026-10-19 numeric-looking category values were turned into numbers. A
+saved preset, colour mapping or formula that relied on that (e.g. a category value `12` compared as a
+number) now sees the text `12`; formulas still match (`group_c=12` and `group_c="12"` are equal).
 
 Recommended columns for biological networks: `name`, `degree_n`, a node type as `layer_c` or
 `type_simple_c` (`protein` / `transcript` / `metabolite`), database ids as `_c` columns
@@ -111,7 +119,7 @@ Tab-separated, one header row, one row per edge.
 | Column | Required | Meaning |
 |---|---|---|
 | `source`, `target` | yes | node ids from `nodes.tsv` (edges with unknown ids are skipped) |
-| `weight` | optional | number, default 1 (used for edge cutoff and transparency) |
+| `weight` | optional | a numeric column like any other (no default, no special meaning since 2026-10-21); choose it as `edgeCutoffAttribute` / `edgeAlphaAttribute` / width or colour in the presets |
 | `color` | optional | `#rrggbb`; default = mix of the two node colours |
 | any other column | optional | edge attribute with the same suffix rules, e.g. `edge_type_c` (`protein-protein`, `protein-metabolite`), `score_n`; usable for edge colour and width |
 
@@ -137,8 +145,8 @@ should ship a config.json** - at least a layout and a preset.
 - It must be valid JSON and start with `"version": 1` and `"exportType": "asdf10k-local-storage"`;
   otherwise it is ignored silently and the app starts with the built-in defaults.
 - Every other key is optional; missing keys keep the built-in default, unknown keys are ignored.
-- It has the same shape as the file the app writes with lil-gui **settings › Export local
-  storage**. The most reliable way to make a good config: load the dataset, arrange the view by hand
+- It has the same shape as the file the app writes with **Settings window › Data › Create config.json** (it saves the current view as the preset `default`
+  and makes it `lastUsedPreset`). The most reliable way to make a good config: load the dataset, arrange the view by hand
   (layout, colour, size, edges, windows), export, save the file as `config.json` in the dataset
   folder, then trim it (remove `localStorage`, keep what you set on purpose).
 - What a user changes later is kept in their browser; a fresh browser (or a private window) always
@@ -153,24 +161,25 @@ should ship a config.json** - at least a layout and a preset.
 |---|---|---|
 | `version` | `1` | **required** |
 | `exportType` | `"asdf10k-local-storage"` | **required** |
+| `schemaVersion` | `1` | written by the app (config and every preset) since 2026-10-19; optional, not read yet (for later migrations) |
 | `dataset` | string | the dataset key from index.json; informational (the folder decides); an old key listed in `aliases` is accepted |
 | `nodeLayout` | string | layout at start: `default` (the `x`/`y`/`z` columns), a `<name>` from `x_<name>` columns, or `__CUSTOM__` together with `customLayoutColumns` |
 | `customLayoutColumns` | `{ "x": col, "y": col, "z": col }` | three numeric node columns used as positions when `nodeLayout` is `__CUSTOM__` |
-| `presets` | `{ "<name>": { preset } }` | named view settings (4.3); merged into the user's presets for this dataset |
-| `lastUsedPreset` | string | name of the preset applied at start; must be a key of `presets` |
-| `subsetListLibrary` | `[{ "name": string, "namesText": string }]` | named node lists in the Subset List window; `namesText` = node ids separated by spaces. Listed sets also tag their nodes in the column `subsets_a` |
-| `subsetBuilderLibrary` | `[{ "name": string, "formula": string, "autorun"?: true }]` | saved formulas in the Subset Query window (`layer_c=metabolite AND degree_n>3`); the first entry with `"autorun": true` is applied at start as the initial selection |
+| `presets` | `{ "<name>": { preset } }` | named view settings (4.3); the presets of this dataset (none are stored in the browser) |
+| `lastUsedPreset` | string | name of the preset applied at start; must be a key of `presets`. Without it the built-in defaults apply |
+| `subsetListLibrary` | `[{ "name": string, "namesText": string }]` | named node lists in the Subset List window; `namesText` = node ids separated by spaces. Listed sets also tag their nodes in the column `subsets_a`. Added to the user's own lists of this dataset at load (never replacing them) |
+| `subsetBuilderLibrary` | `[{ "name": string, "formula": string, "autorun"?: true }]` | saved formulas in the Subset Query window (`layer_c=metabolite AND degree_n>3`); the first entry with `"autorun": true` is applied at start as the initial selection. Added to the user's saved formulas of this dataset at load |
 | `openWindows` | `[{ "type", "title"?, "config" }]` | windows opened at start (4.4) |
 | `tooltips` | object | extra tooltip data per node type (4.5) |
 | `tooltipFetchIdAttribute` | column | node column used for the basic tooltip lookups (usually the gene symbol column, `name`) |
-| `window_molecular` | `{ "fetchIdColumn": column }` | column holding the UniProt query for the 3D structure window (gene symbol or UniProt accession) |
-| `edgeHighlightSettings` | object | the selection's edges: `highlightEdgesEnabled` (bool), `highlightEdgeWidthScale` (~2-3), `highlightEdgeOpacity` (~1-6), `fadeOtherEdgesEnabled` (bool), `fadeOtherEdgesOpacity` (0-1, how visible other edges stay), `subsetEdgesOnly` (bool: draw only the selection's edges), `edgeSubsetMode` (`induced` = both ends selected, `incident` = at least one) |
+| `window_molecular` | `{ "fetchIdColumn": column, "highlightColumn"?: column, "residueTypesColumn"?: column, "residueConsequencesColumn"?: column }` | `fetchIdColumn`: column holding the UniProt query for the 3D structure window (gene symbol or UniProt accession); `highlightColumn`: column with the residues to highlight (`R403,G741` or `701,18`; default the first of `hl3d`, `3dhl`, `phosphosites`); `residueTypesColumn` / `residueConsequencesColumn`: per-residue variant types and consequences (`K670:inversion,I716:SNV\|indel`, `\|` between several; default `clinvar_residue_types` / `clinvar_residue_consequences`) - the AR residue list filters and colours by them |
+| `edgeHighlightSettings` | object | old configs only (not written since 2026-10-19; still read): the same seven fields belong in the preset. The selection's edges: `highlightEdgesEnabled` (bool), `highlightEdgeWidthScale` (~2-3), `highlightEdgeOpacity` (~1-6), `fadeOtherEdgesEnabled` (bool), `fadeOtherEdgesOpacity` (0-1, how visible other edges stay), `subsetEdgesOnly` (bool: draw only the selection's edges), `edgeSubsetMode` (`induced` = both ends selected, `incident` = at least one) |
 | `sliderRanges` | object | min / max / step of the size sliders `nodeSizeScaling`, `nodeMinSize`, `edgeWidthScaling`, `edgeMinWidth`, each `{ "min", "max", "step" }`; narrow them for demos so the graph cannot be made unreadable |
-| `presentationMode` | object | reduced menu for demos and exhibitions: `{ "startInPresentationMode": true, "menuItems": [...] }` with item ids such as `windows.distribution`, `windows.enrichment`, `windows.custom`, `layout.next`, `layout.nodeLayout`, `nav.resetView`, `subset.expandOneHop`, `subset.clear`, or `{ "id": "nodes.colorAttribute", "children": ["layer_c", "degree_n"] }` to offer only some options. Leave it out for normal use |
+| `presentationMode` | object | reduced menu for demos and exhibitions: `{ "startInPresentationMode": true, "menuItems": [...] }` with item ids such as `windows.distribution`, `windows.enrichment`, `windows.custom`, `layout.next`, `layout.nodeLayout`, `nav.resetView`, `subset.expandOneHop`, `subset.clear`, or `{ "id": "nodes.colorAttribute", "children": ["layer_c", "degree_n"] }` to offer only some options. Leave it out for normal use (or `"menuItems": []`: same as leaving it out, no Presentation button) |
 | `ar` | `{ "showBoxLines": bool }` | AR placement box wireframe on the Quest (default `true`) |
 | `xrTooltipMaxDistanceMeters`, `xrToggleMaxDistanceMeters` | number (metres) | reach of the VR / AR laser for tooltips and for selecting nodes (about 1) |
 | `metadataCache` | `{ "enabled": true }` | tooltip data from a prebuilt `cache/` folder (built with a developer tool); leave it out unless that folder exists |
-| `agentBackendUrl` | URL | the AI agent backend's base URL ending in `/api` (e.g. `http://127.0.0.1:8787/api`). Usually leave it out: the app uses `services.agent.url` from `data/index.json`, else `/agent-api` on its own origin, which the shipped `server.py` and a production web server forward to the backend. Only for a dataset that needs a different backend. Setup: [agent-backend.md](agent-backend.md) |
+| `agentBackendUrl` | URL | the AI agent backend's base URL ending in `/api` (e.g. `http://127.0.0.1:8787/api`). Usually leave it out: the app uses `services.agent.url` from `data/index.json`, else `/agent-api` on its own origin, which the shipped `server.py` and a production web server forward to the backend. Only for a dataset that needs a different backend; `""` = the default. Setup: [agent-backend.md](agent-backend.md) |
 | `localStorage` | object | raw browser-storage snapshot written by Export (window positions, table settings). Do not write it by hand; remove it from exported files unless you want exactly those positions |
 
 Top-level `cameraPosition` / `cameraRotation` in exported files are not read; the camera belongs to
@@ -180,32 +189,30 @@ a preset (4.3).
 
 A preset is a set of view settings. Write the fields you care about; missing ones keep the
 built-in default. Several presets can be shipped ("Overview", "Fold change", "Pathways"); users
-switch them in lil-gui › Presets. A preset never changes the dataset or the layout (use the
+switch them in the Settings window › Data (Load Preset). A preset never changes the dataset or the layout (use the
 top-level `nodeLayout`).
 
 | Field | Built-in default | Values | Meaning |
 |---|---|---|---|
 | `nodeColorAttribute` | `original` | `original` (the `color` column / palette) or a node column | node colour |
 | `nodeColorScalingMethod` | `linear` | `linear`, `log`, `symlog`, `quantile` | how a numeric colour column maps to the gradient |
-| `nodeSizeAttribute` | `size_norm` (constant) | a node column | node size |
+| `nodeSizeAttribute` | `uniform` | `uniform` (every node the same size) or a node column | node size |
 | `nodeSizeScalingMethod` | `linear` | as above | |
 | `nodeSizeScaling` | 1 | 1-8 | overall node size factor |
 | `nodeMinSize` | 0.005 | 0-5 | smallest node after scaling |
-| `nodeMeshAttribute` | `cluster` | a category column with few values | node shape per value |
-| `nodeMeshScalingMethod` | `linear` | as above | |
-| `edgeColorAttribute` | `weight_norm` | an edge column or `weight_norm` | edge colour |
+| `edgeColorAttribute` | `original` | `original` (the `color` column, else the blend of the two nodes' colours) or an edge column | edge colour |
 | `edgeColorScalingMethod` | `linear` | as above | |
-| `edgeWidthAttribute` | `width_norm` (constant) | an edge column or `width_norm` | edge width |
+| `edgeWidthAttribute` | `uniform` | `uniform` (every edge the same width) or a numeric edge column | edge width |
 | `edgeWidthScalingMethod` | `linear` | as above | |
 | `edgeWidthScaling` | 2.5 | 0.01-15 | overall edge width factor |
 | `edgeMinWidth` | 2 | 0.01-100 | thinnest edge |
 | `edgeOpacity` | 0.06 | 0.01-1 | edge transparency |
 | `edgeBlending` | `additive` | `normal`, `additive`, `multiply` | how overlapping edges combine; `additive` glows on the dark background, `normal` keeps exact colours |
-| `edgeAlphaByWeight` | `true` | bool | edge opacity follows `weight` between `edgeAlphaMin` and `edgeAlphaMax` |
-| `edgeAlphaMin` / `edgeAlphaMax` | 0.1 / 0.8 | 0.01-1 | |
+| `edgeAlphaAttribute` | `none` | `none` or a numeric edge column | edge opacity follows that column (min..max) between `edgeAlphaMin` and `edgeAlphaMax`, times `edgeOpacity`; `none` = `edgeOpacity` alone |
+| `edgeAlphaMin` / `edgeAlphaMax` | 0.1 / 0.8 | 0.01-1 | only with an `edgeAlphaAttribute` column |
 | `edgeFadeDistance` | 0.7 | 0.1-1 | edges fade with distance from the camera (1 = no fade) |
-| `edgeDensityMode` / `edgeDensityScale` | `false` / 2 | bool / 0.5-5 | thins very dense edge regions |
-| `edgeCutoff` | 0 | 0-1 | hides edges whose normalised weight is below it (0 = all edges) |
+| `edgeCutoffAttribute` | `none` | `none` or a numeric edge column | the column the cut-off compares |
+| `edgeCutoff` | 0 | 0-1 | hides edges whose `edgeCutoffAttribute` value, normalised to 0..1 (min..max), is below it; an edge without a value counts as 0 (0 = all edges; no effect with `none`) |
 | `highlightNodesEnabled` | `true` | bool | selected nodes are marked |
 | `highlightNodeSizeScale` | 1 | 0-6 | size factor of selected nodes |
 | `highlightEdgesEnabled` | `false` | bool | the selection's edges are highlighted |
@@ -218,6 +225,9 @@ top-level `nodeLayout`).
 | `resolutionScale` | 1 | 0.5-2 | render resolution (lower = faster on weak machines) |
 | `enableDynamicResolution` / `targetFPS` | `false` / 60 | bool / number | lowers the resolution automatically to hold the frame rate |
 | `cameraPosition` / `cameraRotation` | the app's start view | `{ "x", "y", "z" }` | camera at start; only meaningful when taken from an exported preset |
+
+`nodeMeshAttribute` / `nodeMeshScalingMethod` (node shape per value) are no longer read since
+2026-10-19: every node is an octahedron, the setting never changed the shape. Old files may keep them.
 
 ### 4.4 Windows at start (`openWindows`)
 
@@ -300,12 +310,11 @@ Then decide:
 - **Node size**: an importance measure, typically `degree_n` with `quantile` or `log` when a few
   hubs dominate (skew > 2). `nodeSizeScaling` 4-5 and `nodeMinSize` 0.5 for 100-5 000 nodes;
   `nodeSizeScaling` 2-3 above that.
-- **Node shape (`nodeMeshAttribute`)**: a category with 2-4 values (protein / transcript /
-  metabolite), so shape and colour can show two groupings.
-- **Edge colour**: an edge category (`edge_type_c`) if present, else `weight_norm`.
+- **Edge colour**: an edge category (`edge_type_c`) if present, else `original`.
 - **Edge opacity by density** (edges per node): below 3 -> `edgeOpacity` 0.5-0.7; 3-10 -> 0.2-0.4;
-  above 10 -> 0.05-0.15 plus `edgeCutoff` 0.1-0.3 if `weight` is meaningful. Keep `additive`.
-- **Edge width**: `width_norm` (uniform) unless an edge score should stand out (then that column
+  above 10 -> 0.05-0.15 plus `edgeCutoffAttribute` = a meaningful edge score (e.g. `weight`) and
+  `edgeCutoff` 0.1-0.3. Keep `additive`.
+- **Edge width**: `uniform` unless an edge score should stand out (then that column
   with `quantile`); `edgeWidthScaling` 2-3, `edgeMinWidth` 20-40 for small graphs, lower for large.
 - **Selection highlight**: `highlightEdgesEnabled: true`, `fadeOtherEdgesEnabled: true` with
   `fadeOtherEdgesOpacity` 0.3-0.6 and `bloomMode: "selection"` make a selected module stand out
@@ -318,7 +327,7 @@ Then decide:
   For a guided story ship a custom window with `open: true` instead.
 - **Tooltips**: map the type column's values to fetchers (proteins `uniprot`, metabolites
   `pubchem`), precise id columns first.
-- **Large graphs** (> 20 000 nodes or > 100 000 edges): `edgeCutoff` > 0, low `edgeOpacity`,
+- **Large graphs** (> 20 000 nodes or > 100 000 edges): `edgeCutoff` > 0 on an edge score, low `edgeOpacity`,
   `resolutionScale` 0.75 or `enableDynamicResolution: true`, few windows.
 
 Check the result in a fresh private browser window (no stored settings), then adjust and re-export.
@@ -342,9 +351,8 @@ exporting the verified result as `config.json`.
       "nodeSizeScalingMethod": "quantile",
       "nodeSizeScaling": 5,
       "nodeMinSize": 0.5,
-      "nodeMeshAttribute": "layer_c",
       "edgeColorAttribute": "edge_type_c",
-      "edgeWidthAttribute": "width_norm",
+      "edgeWidthAttribute": "uniform",
       "edgeWidthScaling": 2.5,
       "edgeMinWidth": 30,
       "edgeOpacity": 0.4,
@@ -387,6 +395,131 @@ exporting the verified result as `config.json`.
   "tooltipFetchIdAttribute": "name",
   "window_molecular": { "fetchIdColumn": "name" },
   "sliderRanges": { "nodeSizeScaling": { "min": 2, "max": 8, "step": 0.01 } }
+}
+```
+
+### 4.8 Every key with its default
+
+The same file with **every** key the app reads, each at the value that behaves like leaving it out
+(the preset holds all its fields at the built-in defaults of 4.3). Use it to look up a key's exact
+spelling and shape, not as a starting point: a real config sets columns of its own (4.6, 4.7).
+`customLayoutColumns` is read only with `"nodeLayout": "__CUSTOM__"`. An explicit `window_molecular.highlightColumn`
+turns off the fallback to `3dhl` / `phosphosites`; leave it out if your residues are in one of those. Not listed on purpose:
+`localStorage` (written by Export, not by hand) and the old `edgeHighlightSettings` (its seven
+fields belong in the preset).
+
+```json
+{
+  "version": 1,
+  "schemaVersion": 1,
+  "exportType": "asdf10k-local-storage",
+  "dataset": "cml",
+  "nodeLayout": "default",
+  "customLayoutColumns": {
+    "x": "x_fa2_2",
+    "y": "y_fa2_2",
+    "z": "z_fa2_2"
+  },
+  "presets": {
+    "default": {
+      "schemaVersion": 1,
+      "nodeSizeScaling": 1,
+      "nodeMinSize": 0.005,
+      "edgeWidthScaling": 2.5,
+      "edgeMinWidth": 2,
+      "nodeSizeAttribute": "uniform",
+      "nodeColorAttribute": "original",
+      "edgeWidthAttribute": "uniform",
+      "edgeColorAttribute": "original",
+      "edgeCutoffAttribute": "none",
+      "edgeCutoff": 0,
+      "nodeSizeScalingMethod": "linear",
+      "nodeColorScalingMethod": "linear",
+      "edgeWidthScalingMethod": "linear",
+      "edgeColorScalingMethod": "linear",
+      "edgeOpacity": 0.06,
+      "edgeBlending": "additive",
+      "edgeAlphaAttribute": "none",
+      "edgeAlphaMin": 0.1,
+      "edgeAlphaMax": 0.8,
+      "edgeFadeDistance": 0.7,
+      "highlightNodeSizeScale": 1,
+      "highlightEdgeWidthScale": 0.2,
+      "highlightNodesEnabled": true,
+      "highlightEdgesEnabled": false,
+      "subsetEdgesOnly": true,
+      "edgeSubsetMode": "induced",
+      "highlightEdgeOpacity": 1,
+      "fadeOtherEdgesEnabled": false,
+      "fadeOtherEdgesOpacity": 0.3,
+      "enabled": true,
+      "distance": 1200,
+      "enableDynamicResolution": false,
+      "targetFPS": 60,
+      "resolutionScale": 1,
+      "bloomMode": "selection",
+      "bloomStrength": 0.95,
+      "bloomRadius": 0.15,
+      "bloomThreshold": 0.54
+    }
+  },
+  "lastUsedPreset": "default",
+  "subsetListLibrary": [],
+  "subsetBuilderLibrary": [],
+  "openWindows": [],
+  "tooltips": {
+    "default": {
+      "extra1": {
+        "fetcher": "uniprot"
+      },
+      "extra2": {
+        "fetcher": "genecards-expression"
+      }
+    },
+    "show3dModels": true
+  },
+  "tooltipFetchIdAttribute": "name",
+  "window_molecular": {
+    "fetchIdColumn": "name",
+    "highlightColumn": "hl3d",
+    "residueTypesColumn": "clinvar_residue_types",
+    "residueConsequencesColumn": "clinvar_residue_consequences"
+  },
+  "metadataCache": {
+    "enabled": false
+  },
+  "ar": {
+    "showBoxLines": true
+  },
+  "xrTooltipMaxDistanceMeters": 1,
+  "xrToggleMaxDistanceMeters": 2,
+  "sliderRanges": {
+    "nodeSizeScaling": {
+      "min": 0.01,
+      "max": 6,
+      "step": 0.01
+    },
+    "nodeMinSize": {
+      "min": 0,
+      "max": 5,
+      "step": 0.01
+    },
+    "edgeWidthScaling": {
+      "min": 0.01,
+      "max": 15,
+      "step": 0.01
+    },
+    "edgeMinWidth": {
+      "min": 0.01,
+      "max": 100,
+      "step": 0.01
+    }
+  },
+  "presentationMode": {
+    "startInPresentationMode": false,
+    "menuItems": []
+  },
+  "agentBackendUrl": ""
 }
 ```
 

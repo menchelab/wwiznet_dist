@@ -187,7 +187,6 @@ before writing buttons: a wrong column or layout name makes the button fail with
 | `nodes.sizeMethod` | `linear`, `log`, `symlog`, `quantile` |
 | `nodes.sizeScaling` | number 1 .. 8 |
 | `nodes.minSize` | number 0 .. 5 |
-| `nodes.meshAttribute` | a category column (shape per value) |
 | `edges.colorAttribute`, `edges.widthAttribute` | an edge column (e.g. `edge_type_c`, or an RWR flow column after a random walk) |
 | `edges.colorMethod`, `edges.widthMethod` | `linear`, `log`, `symlog`, `quantile` |
 | `edges.widthScaling` | number 0.01 .. 15 |
@@ -260,6 +259,20 @@ the current selection.
 |---|---|---|
 | `rwr.run` | `seeds` (ids; default the selection), `name`, `alpha` (0.7), `beta` (0.3), `topN` | random walk with restart: adds node columns `rwr_<name>_rank_n`, `rwr_<name>_probability_n` and the edge column `rwr_<name>_flow_n` |
 | `cluster.run` | `layout` (`default`), `method` (`louvain` / `leiden-simple`), `k` (15), `resolution` (1), `minClusterSize` (5), `columnName` | clustering on a layout's positions; adds a category column `cluster_<n>_c` |
+
+### Other commands
+
+| Command | Parameters | Does |
+|---|---|---|
+| `dataset.switch` | `key` (a dataset key from `data/index.json`) | load another dataset (closes every window) |
+| `columns.addFromTsv` | `tsv` (first column `_id`, then suffixed columns), `source`, `descriptions` | add temporary node columns |
+| `xr.molecule.open` | `node` (id or gene name) | open the protein's 3D structure in the AR molecule mode, for everyone in the session who is in AR (a desktop shows nothing in 3D) |
+| `xr.molecule.select` | `residue` (number; `null` clears) | select a residue of the open AR molecule |
+| `xr.molecule.filter` | `row` (`consequence` / `type`), `key` (the chip as the list shows it), `on` | switch a residue-list filter chip |
+| `xr.molecule.close` | - | close the AR molecule for everyone |
+
+`settings.list` and `config.export` return data and are meant for scripts (`window.asdf10k`), not
+buttons.
 
 A typical sequence for a tour: select seeds, run the walk, colour by its probability and the edges
 by its flow:

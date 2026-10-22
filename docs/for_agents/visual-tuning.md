@@ -47,7 +47,7 @@ Commands you need:
 | `nav.resetView` | - | camera back to the overview - call before every comparison screenshot |
 | `subset.set` | `ids` | select nodes, to judge how a selection stands out (`subset.clear` to reset) |
 | `nav.flyToSubset` | - | camera to the selection |
-| `config.export` | `presetName?`, `includeLocalStorage?` | a ready `config.json` object of the current state; with `presetName` the current view is saved as that preset and becomes `lastUsedPreset` |
+| `config.export` | `presetName?`, `includeLocalStorage?` | a ready `config.json` object of the current state; the current view is first saved as a preset (`presetName`, else `default`, overwritten every time) and becomes `lastUsedPreset` |
 | `dataset.switch` | `key` | switch dataset (when the deployment has several) |
 
 Example, as JavaScript evaluated in the page:
@@ -69,14 +69,14 @@ The setting ids and their preset fields:
 | `nodes.colorAttribute` / `nodes.colorMethod` | `nodeColorAttribute` / `nodeColorScalingMethod` |
 | `nodes.sizeAttribute` / `nodes.sizeMethod` | `nodeSizeAttribute` / `nodeSizeScalingMethod` |
 | `nodes.sizeScaling`, `nodes.minSize` | `nodeSizeScaling`, `nodeMinSize` |
-| `nodes.meshAttribute` / `nodes.meshMethod` | `nodeMeshAttribute` / `nodeMeshScalingMethod` |
 | `edges.colorAttribute` / `edges.colorMethod` | `edgeColorAttribute` / `edgeColorScalingMethod` |
 | `edges.widthAttribute` / `edges.widthMethod` | `edgeWidthAttribute` / `edgeWidthScalingMethod` |
 | `edges.widthScaling`, `edges.minWidth` | `edgeWidthScaling`, `edgeMinWidth` |
-| `edges.opacity`, `edges.blending`, `edges.cutoff` | `edgeOpacity`, `edgeBlending`, `edgeCutoff` |
-| `edges.alphaByWeight`, `edges.minAlpha`, `edges.maxAlpha`, `edges.fadeDistance` | `edgeAlphaByWeight`, `edgeAlphaMin`, `edgeAlphaMax`, `edgeFadeDistance` |
+| `edges.opacity`, `edges.blending` | `edgeOpacity`, `edgeBlending` |
+| `edges.cutoffAttribute`, `edges.cutoff` | `edgeCutoffAttribute`, `edgeCutoff` (the cut-off is offered once a column is chosen) |
+| `edges.alphaAttribute`, `edges.minAlpha`, `edges.maxAlpha`, `edges.fadeDistance` | `edgeAlphaAttribute`, `edgeAlphaMin`, `edgeAlphaMax`, `edgeFadeDistance` |
 | `layout.nodeLayout` | top-level `nodeLayout` |
-| `highlight.*` | preset highlight fields / `edgeHighlightSettings` (edit them in the config; see below) |
+| `highlight.*` | preset highlight fields (edit them in the config; see below) |
 
 You do not have to map them yourself: `config.export` writes the current values into the preset.
 
@@ -137,11 +137,11 @@ Then edit the file:
 
 - Keep `version`, `exportType`, `dataset`, `nodeLayout`, `presets` (only the presets you want to
   ship), `lastUsedPreset`; keep `tooltips`, `window_molecular`, libraries and `openWindows` if you
-  set them up on purpose; remove anything you did not intend (e.g. windows you opened for testing,
-  presets that existed in the browser before).
+  set them up on purpose; remove anything you did not intend (e.g. windows you opened for testing).
 - Highlight look (step 5): set `highlightEdgesEnabled`, `fadeOtherEdgesEnabled`,
-  `fadeOtherEdgesOpacity`, `highlightNodeSizeScale`, `bloomMode` in the preset, or
-  `edgeHighlightSettings` at the top level (values in the data guide, 4.2 / 4.3).
+  `fadeOtherEdgesOpacity`, `highlightNodeSizeScale`, `bloomMode` in the preset (values in the data
+  guide, 4.2 / 4.3). The export puts the current view into the preset `default` and makes it
+  `lastUsedPreset`.
 
 ## Verify
 
@@ -154,8 +154,9 @@ keys). Only then is the config done.
 
 - Settings you change in a browser are stored in that browser (local storage); they are not in the
   deployment until they are in `config.json`. Always verify in a fresh context.
-- `config.export` with a `presetName` also saves that preset in the current browser; use a fresh
-  context for tuning sessions so old presets of that browser do not end up in the export.
+- `config.export` with a `presetName` keeps that preset until the page reloads; presets are not
+  stored in the browser, so the export holds the dataset's `config.json` presets plus the ones saved
+  since the load. Only a new `config.json` makes them permanent.
 - A dropdown value that is not in `settings.list`'s options is refused (`ok: false`): read the
   error, it lists what is allowed.
 - Wait after every change (about half a second, more for large graphs) before the screenshot;
