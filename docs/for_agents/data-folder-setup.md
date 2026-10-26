@@ -54,7 +54,7 @@ invalid file) the app shows "No datasets configured" and loads nothing. Its form
 | Field | Rules |
 |---|---|
 | `version` | `2` (`1` for the old `datasets.json` without `services`) |
-| `services` | optional. `collab`: `{ "url": "https://collab.example.org/api", "token": "..." }` - the multiplayer session relay (asdf10k-collab-backend) and its shared token; without it the app expects the relay at `/sync-api` on its own origin. `agent`: `{ "url": "..." }` - the agent backend, default `/agent-api` |
+| `services` | optional. `collab`: `{ "url": "https://collab.example.org/api", "token": "..." }` - the multiplayer session relay (asdf10k-collab-backend) and its shared token; without it the app expects the relay at `/sync-api` on its own origin. Voice chat in sessions needs nothing here: the relay hands out its STUN / TURN servers (its README, "Voice chat: STUN / TURN"; TURN only for members on different networks). `agent`: `{ "url": "..." }` - the agent backend, default `/agent-api` |
 | `default` | key loaded when the URL has no `?dataset=`; optional, default = first non-hidden entry |
 | `key` | lowercase letters, digits, `_`, `-`; starts with a letter or digit; unique. It is the dataset's identity (URL, saved settings) - do not rename it later, or add the old key to `aliases` |
 | `folder` | path below `data/`, subfolders allowed (`projects/cml/v2`), no leading `/`, no `..` |

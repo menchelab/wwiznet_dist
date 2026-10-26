@@ -270,6 +270,8 @@ the current selection.
 | `xr.molecule.select` | `residue` (number; `null` clears) | select a residue of the open AR molecule |
 | `xr.molecule.filter` | `row` (`consequence` / `type`), `key` (the chip as the list shows it), `on` | switch a residue-list filter chip |
 | `xr.molecule.close` | - | close the AR molecule for everyone |
+| `xr.cube.enter` | - | AR cube mode on for everyone: the network as a 30 cm miniature people grab, turn and scale |
+| `xr.cube.exit` | - | AR cube mode off: the network back into the AR box |
 
 `settings.list` and `config.export` return data and are meant for scripts (`window.asdf10k`), not
 buttons.
